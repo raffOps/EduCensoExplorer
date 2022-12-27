@@ -1,2 +1,4 @@
 requests
 backoff
+duckdb
+pandas
