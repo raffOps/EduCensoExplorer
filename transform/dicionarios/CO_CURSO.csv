@@ -1,0 +1,885 @@
+Código OCDE,Nome - Grau
+0111C012,Ciência da educação - Bacharelado
+0111C014,Ciência da educação - Sequencial
+0111P013,Processos escolares - Tecnológico
+0111P022,Psicopedagogia - Bacharelado
+0111P024,Psicopedagogia - Sequencial
+0112E011,Educação infantil formação de professor - Licenciatura
+0113E011,Educação do campo formação de professor - Licenciatura
+0113E021,Educação especial formação de professor - Licenciatura
+0113E031,Educação indígena formação de professor - Licenciatura
+0113F011,Formação pedagógica de professor para a educação básica - Licenciatura
+0113F014,Formação pedagógica de professor para a educação básica - Sequencial
+0113P011,Pedagogia - Licenciatura
+0113P012,Pedagogia - Bacharelado
+0113P014,Pedagogia - Sequencial
+0114A011,Artes formação de professor - Licenciatura
+0114A014,Artes formação de professor - Sequencial
+0114A021,Artes visuais formação de professor - Licenciatura
+0114B011,Biologia formação de professor - Licenciatura
+0114C011,Ciências agrárias formação de professor - Licenciatura
+0114C021,Ciências naturais formação de professor - Licenciatura
+0114C031,Ciências sociais formação de professor - Licenciatura
+0114C041,Cinema e audiovisual formação de professor - Licenciatura
+0114C051,Computação formação de professor - Licenciatura
+0114D011,Dança formação de professor - Licenciatura
+0114E011,Economia doméstica formação de professor - Licenciatura
+0114E021,Educação do campo em áreas de conhecimento da educação básica formação de professor - Licenciatura
+0114E031,Educação física formação de professor - Licenciatura
+0114E041,Educação indígena em áreas de conhecimento da educação básica formação de professor - Licenciatura
+0114E051,Enfermagem formação de professor - Licenciatura
+0114E061,Ensino profissionalizante em área específica formação de professor - Licenciatura
+0114E071,Ensino religioso formação de professor - Licenciatura
+0114E081,Estatística formação de professor - Licenciatura
+0114F011,Filosofia formação de professor - Licenciatura
+0114F021,Física formação de professor - Licenciatura
+0114G011,Geografia formação de professor - Licenciatura
+0114H011,História formação de professor - Licenciatura
+0114M011,Matemática formação de professor - Licenciatura
+0114M021,Música formação de professor - Licenciatura
+0114P011,Psicologia formação de professor - Licenciatura
+0114Q011,Química formação de professor - Licenciatura
+0114T011,Teatro formação de professor - Licenciatura
+0115L011,Letras alemão formação de professor - Licenciatura
+0115L021,Letras espanhol formação de professor - Licenciatura
+0115L031,Letras francês formação de professor - Licenciatura
+0115L041,Letras inglês formação de professor - Licenciatura
+0115L051,Letras italiano formação de professor  - Licenciatura
+0115L061,Letras japonês formação de professor  - Licenciatura
+0115L071,Letras língua brasileira de sinais formação de professor - Licenciatura
+0115L081,Letras línguas estrangeiras clássicas formação de professor - Licenciatura
+0115L091,Letras linguística formação de professor  - Licenciatura
+0115L101,Letras outras línguas estrangeiras modernas formação de professor  - Licenciatura
+0115L111,Letras português alemão formação de professor - Licenciatura
+0115L121,Letras português espanhol formação de professor - Licenciatura
+0115L131,Letras português formação de professor - Licenciatura
+0115L141,Letras português francês formação de professor - Licenciatura
+0115L151,Letras português inglês formação de professor - Licenciatura
+0115L161,Letras português italiano formação de professor - Licenciatura
+0115L171,Letras português japonês formação de professor - Licenciatura
+0115L181,Letras português língua brasileira de sinais formação de professor - Licenciatura
+0115L191,Letras português línguas estrangeiras clássicas formação de professor - Licenciatura
+0115L201,Letras português outras línguas estrangeiras modernas formação de professor - Licenciatura
+0115L211,Letras tradutor e intérprete formação de professor - Licenciatura
+0188P011,Programas interdisciplinares abrangendo educação - Licenciatura
+0188P012,Programas interdisciplinares abrangendo educação - Bacharelado
+0188P013,Programas interdisciplinares abrangendo educação - Tecnológico
+0211A012,Animação - Bacharelado
+0211A013,Animação - Tecnológico
+0211A014,Animação - Sequencial
+0211C012,Cinema e audiovisual - Bacharelado
+0211C013,Cinema e audiovisual - Tecnológico
+0211C014,Cinema e audiovisual - Sequencial
+0211C023,Comunicação assistiva - Tecnológico
+0211D012,Design gráfico - Bacharelado
+0211D013,Design gráfico - Tecnológico
+0211D014,Design gráfico - Sequencial
+0211F012,Fotografia - Bacharelado
+0211F013,Fotografia - Tecnológico
+0211F014,Fotografia - Sequencial
+0211P012,Produção audiovisual - Bacharelado
+0211P013,Produção audiovisual - Tecnológico
+0211P014,Produção audiovisual - Sequencial
+0211P023,Produção cênica - Tecnológico
+0211P032,Produção cultural - Bacharelado
+0211P033,Produção cultural - Tecnológico
+0211P034,Produção cultural - Sequencial
+0211P043,Produção fonográfica - Tecnológico
+0211P052,Produção multimídia - Bacharelado
+0211P053,Produção multimídia - Tecnológico
+0211P054,Produção multimídia - Sequencial
+0212D012,Desenho industrial - Bacharelado
+0212D022,Design - Bacharelado
+0212D023,Design - Tecnológico
+0212D032,Design de interiores - Bacharelado
+0212D033,Design de interiores - Tecnológico
+0212D034,Design de interiores - Sequencial
+0212D042,Design de produto - Bacharelado
+0212D043,Design de produto - Tecnológico
+0212D044,Design de produto - Sequencial
+0212M012,Moda - Bacharelado
+0212M013,Moda - Tecnológico
+0212M014,Moda - Sequencial
+0213A012,Artes - Bacharelado
+0213A013,Artes - Tecnológico
+0213A014,Artes - Sequencial
+0213A022,Artes plásticas - Bacharelado
+0213A023,Artes plásticas - Tecnológico
+0213A024,Artes plásticas - Sequencial
+0213A032,Artes visuais - Bacharelado
+0213A033,Artes visuais - Tecnológico
+0213H012,História da arte - Bacharelado
+0214F013,Fabricação de instrumentos musicais não industrial - Tecnológico
+0215A012,Artes cênicas - Bacharelado
+0215A013,Artes cênicas - Tecnológico
+0215D012,Dança - Bacharelado
+0215D013,Dança - Tecnológico
+0215M012,Música - Bacharelado
+0215M013,Música  - Tecnológico
+0215M014,Música - Sequencial
+0215T012,Teatro - Bacharelado
+0215T013,Teatro - Tecnológico
+0221C012,Ciências da religião - Bacharelado
+0221T012,Teologia - Bacharelado
+0221T014,Teologia - Sequencial
+0222A012,Arqueologia - Bacharelado
+0222A013,Arqueologia - Tecnológico
+0222C012,Conservação e restauro - Bacharelado
+0222C013,Conservação e restauro - Tecnológico
+0222H012,História - Bacharelado
+0222H014,História - Sequencial
+0223F012,Filosofia - Bacharelado
+0223F014,Filosofia - Sequencial
+0231L012,Letras alemão - Bacharelado
+0231L023,Letras escrita criativa - Tecnológico
+0231L024,Letras escrita criativa - Sequencial
+0231L032,Letras espanhol - Bacharelado
+0231L034,Letras espanhol - Sequencial
+0231L042,Letras francês - Bacharelado
+0231L052,Letras inglês - Bacharelado
+0231L054,Letras inglês - Sequencial
+0231L062,Letras italiano - Bacharelado
+0231L072,Letras japonês - Bacharelado
+0231L082,Letras língua brasileira de sinais - Bacharelado
+0231L083,Letras língua brasileira de sinais - Tecnológico
+0231L084,Letras língua brasileira de sinais - Sequencial
+0231L092,Letras línguas estrangeiras clássicas  - Bacharelado
+0231L094,Letras línguas estrangeiras clássicas - Sequencial
+0231L102,Letras linguística - Bacharelado
+0231L112,Letras outras línguas estrangeiras modernas  - Bacharelado
+0231L122,Letras português - Bacharelado
+0231L124,Letras português - Sequencial
+0231L132,Letras português alemão  - Bacharelado
+0231L142,Letras português espanhol - Bacharelado
+0231L152,Letras português francês - Bacharelado
+0231L162,Letras português inglês - Bacharelado
+0231L172,Letras português italiano - Bacharelado
+0231L182,Letras português japonês  - Bacharelado
+0231L192,Letras português língua brasileira de sinais - Bacharelado
+0231L202,Letras português línguas estrangeiras clássicas  - Bacharelado
+0231L212,Letras português outras línguas estrangeiras modernas - Bacharelado
+0231L222,Letras tradutor e intérprete - Bacharelado
+0231L223,Letras tradutor e intérprete - Tecnológico
+0231L224,Letras tradutor e intérprete - Sequencial
+0288P012,Programas interdisciplinares abrangendo artes e humanidades - Bacharelado
+0288P014,Programas interdisciplinares abrangendo artes e humanidades - Sequencial
+0311E012,Economia - Bacharelado
+0311E014,Economia - Sequencial
+0312A012,Antropologia - Bacharelado
+0312A014,Antropologia - Sequencial
+0312C012,Ciência política - Bacharelado
+0312C014,Ciência política  - Sequencial
+0312C022,Ciências sociais - Bacharelado
+0312C024,Ciências sociais - Sequencial
+0312G012,Geografia - Bacharelado
+0312R012,Relações internacionais - Bacharelado
+0312R014,Relações internacionais - Sequencial
+0312S012,Sociologia - Bacharelado
+0312S014,Sociologia - Sequencial
+0313P012,Psicologia - Bacharelado
+0313P014,Psicologia - Sequencial
+0321C012,Comunicação social - Bacharelado
+0321J012,Jornalismo - Bacharelado
+0321J014,Jornalismo - Sequencial
+0321P012,Produção editorial - Bacharelado
+0321P013,Produção editorial - Tecnológico
+0321P014,Produção editorial - Sequencial
+0321R012,"Rádio, TV e internet - Bacharelado"
+0321R013,"Rádio, TV e internet - Tecnológico"
+0321R014,"Rádio, TV e internet - Sequencial"
+0322A012,Arquivologia - Bacharelado
+0322B012,Biblioteconomia - Bacharelado
+0322G012,Gestão da informação - Bacharelado
+0322G014,Gestão da informação - Sequencial
+0322M012,Museologia - Bacharelado
+0322M013,Museologia - Tecnológico
+0322M014,Museologia - Sequencial
+0388P012,"Programas interdisciplinares abrangendo ciências sociais, jornalismo e informação - Bacharelado"
+0388P014,"Programas interdisciplinares abrangendo ciências sociais, jornalismo e informação - Sequencial"
+0411C012,Contabilidade - Bacharelado
+0411C013,Contabilidade  - Tecnológico
+0411C014,Contabilidade - Sequencial
+0412G012,Gestão financeira - Bacharelado
+0412G013,Gestão financeira  - Tecnológico
+0412G014,Gestão financeira - Sequencial
+0412S013,Seguros - Tecnológico
+0412S014,Seguros - Sequencial
+0413A012,Administração  - Bacharelado
+0413A014,Administração - Sequencial
+0413A022,Administração pública - Bacharelado
+0413A023,Administração pública - Tecnológico
+0413A024,Administração pública - Sequencial
+0413C012,Comércio exterior - Bacharelado
+0413C013,Comércio exterior - Tecnológico
+0413C014,Comércio exterior - Sequencial
+0413E012,Empreendedorismo - Bacharelado
+0413E013,Empreendedorismo - Tecnológico
+0413E014,Empreendedorismo - Sequencial
+0413G013,Gestão da produção - Tecnológico
+0413G014,Gestão da produção - Sequencial
+0413G023,Gestão da qualidade - Tecnológico
+0413G024,Gestão da qualidade - Sequencial
+0413G032,Gestão da saúde - Bacharelado
+0413G033,Gestão da saúde - Tecnológico
+0413G034,Gestão da saúde - Sequencial
+0413G042,Gestão de cooperativas - Bacharelado
+0413G043,Gestão de cooperativas - Tecnológico
+0413G044,Gestão de cooperativas - Sequencial
+0413G052,Gestão de negócios - Bacharelado
+0413G053,Gestão de negócios - Tecnológico
+0413G054,Gestão de negócios - Sequencial
+0413G062,Gestão de negócios internacionais - Bacharelado
+0413G064,Gestão de negócios internacionais - Sequencial
+0413G073,Gestão de pessoas - Tecnológico
+0413G074,Gestão de pessoas - Sequencial
+0413G083,Gestão de serviços - Tecnológico
+0413G084,Gestão de serviços - Sequencial
+0413G092,Gestão do agronegócio - Bacharelado
+0413G093,Gestão do agronegócio - Tecnológico
+0413G094,Gestão do agronegócio - Sequencial
+0413G103,Gestão estratégica - Tecnológico
+0413G104,Gestão estratégica - Sequencial
+0413G113,Gestão hospitalar - Tecnológico
+0413G114,Gestão hospitalar - Sequencial
+0413G122,Gestão pública - Bacharelado
+0413G123,Gestão pública - Tecnológico
+0413G124,Gestão pública - Sequencial
+0413L012,Logística - Bacharelado
+0413L013,Logística - Tecnológico
+0413L014,Logística - Sequencial
+0414M012,Marketing - Bacharelado
+0414M013,Marketing - Tecnológico
+0414M014,Marketing - Sequencial
+0414P012,Publicidade e propaganda - Bacharelado
+0414P013,Publicidade e propaganda - Tecnológico
+0414P014,Publicidade e propaganda - Sequencial
+0414R012,Relações públicas - Bacharelado
+0414R013,Relações públicas - Tecnológico
+0414R014,Relações públicas - Sequencial
+0415S012,Secretariado - Bacharelado
+0415S013,Secretariado - Tecnológico
+0415S014,Secretariado - Sequencial
+0416G013,Gestão comercial - Tecnológico
+0416G014,Gestão comercial - Sequencial
+0416N012,Negócios imobiliários - Bacharelado
+0416N013,Negócios imobiliários - Tecnológico
+0416N014,Negócios imobiliários - Sequencial
+0421D012,Direito - Bacharelado
+0421D013,Direito - Tecnológico
+0421D014,Direito - Sequencial
+0488P012,"Programas interdisciplinares abrangendo negócios, administração e direito - Bacharelado"
+0488P013,"Programas interdisciplinares abrangendo negócios, administração e direito - Tecnológico"
+0511B012,Biologia - Bacharelado
+0511B014,Biologia - Sequencial
+0512B012,Bioquímica - Bacharelado
+0512B022,Biotecnologia - Bacharelado
+0512B023,Biotecnologia - Tecnológico
+0512B024,Biotecnologia - Sequencial
+0512T013,Toxicologia - Tecnológico
+0521C012,Ciências ambientais - Bacharelado
+0521C014,Ciências ambientais - Sequencial
+0521E012,Ecologia - Bacharelado
+0531Q012,Química - Bacharelado
+0531Q013,Química - Tecnológico
+0531Q022,Química industrial e tecnológica - Bacharelado
+0531Q023,Química industrial e tecnológica - Tecnológico
+0531Q024,Química industrial e tecnológica - Sequencial
+0532G012,Geofísica - Bacharelado
+0532G022,Geologia - Bacharelado
+0532G033,Geoprocessamento - Tecnológico
+0532M012,Meteorologia - Bacharelado
+0532O012,Oceanografia - Bacharelado
+0533A012,Astronomia - Bacharelado
+0533F012,Física - Bacharelado
+0533F022,Física aplicada - Bacharelado
+0533F024,Física aplicada - Sequencial
+0533F032,Física médica - Bacharelado
+0541M012,Matemática - Bacharelado
+0541M014,Matemática - Sequencial
+0541M022,Matemática aplicada e computacional - Bacharelado
+0542C012,Ciências atuariais - Bacharelado
+0542E012,Estatística - Bacharelado
+0542E014,Estatística - Sequencial
+0588P012,"Programas interdisciplinares abrangendo ciências naturais, matemática e estatística - Bacharelado"
+0588P013,"Programas interdisciplinares abrangendo ciências naturais, matemática e estatística  - Tecnológico"
+0588P014,"Programas interdisciplinares abrangendo ciências naturais, matemática e estatística  - Sequencial"
+0612B013,Banco de dados - Tecnológico
+0612B014,Banco de dados - Sequencial
+0612D013,Defesa cibernética - Tecnológico
+0612G013,Gestão da tecnologia da informação - Tecnológico
+0612G014,Gestão da tecnologia da informação  - Sequencial
+0612R012,Redes de computadores - Bacharelado
+0612R013,Redes de computadores - Tecnológico
+0612R014,Redes de computadores - Sequencial
+0613E012,Engenharia de software - Bacharelado
+0613E013,Engenharia de software - Tecnológico
+0613E014,Engenharia de software - Sequencial
+0613J012,Jogos digitais - Bacharelado
+0613J013,Jogos digitais - Tecnológico
+0613J014,Jogos digitais - Sequencial
+0614C012,Ciência da computação - Bacharelado
+0614C013,Ciência da computação - Tecnológico
+0614C014,Ciência da computação - Sequencial
+0615S013,Segurança da informação - Tecnológico
+0615S014,Segurança da informação - Sequencial
+0615S022,Sistemas de informação - Bacharelado
+0615S023,Sistemas de informação - Tecnológico
+0615S024,Sistemas de informação - Sequencial
+0615S032,Sistemas para internet - Bacharelado
+0615S033,Sistemas para internet - Tecnológico
+0615S034,Sistemas para internet - Sequencial
+0616E012,Engenharia de computação (DCN Computação) - Bacharelado
+0616S013,Sistemas embarcados - Tecnológico
+0688P012,Programas interdisciplinares abrangendo computação e Tecnologias da Informação e Comunicação (TIC) - Bacharelado
+0688P013,Programas interdisciplinares abrangendo computação e Tecnologias da Informação e Comunicação (TIC) - Tecnológico
+0710E012,Engenharia - Bacharelado
+0711B013,Biocombustíveis - Tecnológico
+0711E012,Engenharia bioquímica - Bacharelado
+0711E022,Engenharia de bioprocessos - Bacharelado
+0711E032,Engenharia de biotecnologia - Bacharelado
+0711E042,Engenharia de nanotecnologia - Bacharelado
+0711E052,Engenharia química - Bacharelado
+0712E012,Engenharia ambiental - Bacharelado
+0712E022,Engenharia ambiental e sanitária - Bacharelado
+0712G012,Gestão ambiental - Bacharelado
+0712G013,Gestão ambiental - Tecnológico
+0712G014,Gestão ambiental - Sequencial
+0712G023,Gestão de resíduos  - Tecnológico
+0712G024,Gestão de resíduos - Sequencial
+0712S013,Saneamento ambiental  - Tecnológico
+0713E013,Eletrotécnica industrial  - Tecnológico
+0713E023,Energias renováveis  - Tecnológico
+0713E032,Engenharia bioenergética - Bacharelado
+0713E042,Engenharia de energia - Bacharelado
+0713E052,Engenharia elétrica - Bacharelado
+0713E062,Engenharia nuclear - Bacharelado
+0713R013,Refrigeração e climatização - Tecnológico
+0713S012,Sistemas elétricos - Bacharelado
+0713S013,Sistemas elétricos - Tecnológico
+0713S014,Sistemas elétricos - Sequencial
+0714A013,Automação industrial - Tecnológico
+0714A014,Automação industrial - Sequencial
+0714E013,Eletrônica industrial - Tecnológico
+0714E022,Engenharia acústica - Bacharelado
+0714E032,Engenharia biomédica - Bacharelado
+0714E042,Engenharia de computação (DCN Engenharia) - Bacharelado
+0714E052,Engenharia de controle e automação - Bacharelado
+0714E062,Engenharia de informação - Bacharelado
+0714E072,Engenharia de telecomunicações - Bacharelado
+0714E082,Engenharia eletrônica - Bacharelado
+0714E092,Engenharia mecatrônica - Bacharelado
+0714G013,Gestão de telecomunicações - Tecnológico
+0714G014,Gestão de telecomunicações - Sequencial
+0714M013,Mecatrônica industrial - Tecnológico
+0714M014,Mecatrônica industrial - Sequencial
+0714R013,Redes de telecomunicações - Tecnológico
+0714S013,Sistemas biomédicos - Tecnológico
+0714S023,Sistemas de telecomunicações - Tecnológico
+0714S024,Sistemas de telecomunicações - Sequencial
+0714T013,Telemática - Tecnológico
+0714T014,Telemática - Sequencial
+0715E012,Engenharia física - Bacharelado
+0715E022,Engenharia mecânica - Bacharelado
+0715E032,Engenharia metalúrgica - Bacharelado
+0715F013,Fabricação mecânica - Tecnológico
+0715M013,Manutenção industrial - Tecnológico
+0715M014,Manutenção industrial - Sequencial
+0715M023,Mecânica de precisão - Tecnológico
+0715P013,Processos metalúrgicos - Tecnológico
+0715P014,Processos metalúrgicos - Sequencial
+0715S013,Soldagem - Tecnológico
+0715S014,Soldagem - Sequencial
+0716A013,Aeroespacial - Tecnológico
+0716C013,Construção naval - Tecnológico
+0716E012,Engenharia aeroespacial - Bacharelado
+0716E022,Engenharia aeronáutica - Bacharelado
+0716E023,Engenharia aeronáutica - Tecnológico
+0716E032,Engenharia automotiva - Bacharelado
+0716E042,Engenharia ferroviária e metroviária - Bacharelado
+0716E052,Engenharia naval - Bacharelado
+0716M013,Manutenção de aeronaves - Tecnológico
+0716M014,Manutenção de aeronaves - Sequencial
+0716S013,Sistemas automotivos - Tecnológico
+0716S023,Sistemas de navegação fluvial - Tecnológico
+0721A012,Alimentos - Bacharelado
+0721A013,Alimentos - Tecnológico
+0721A014,Alimentos - Sequencial
+0721E012,Engenharia de alimentos - Bacharelado
+0721L012,Laticínios - Bacharelado
+0721L013,Laticínios - Tecnológico
+0721P013,Processamento de carnes - Tecnológico
+0721P023,Produção de cachaça - Tecnológico
+0721P033,Produção sucroalcooleira - Tecnológico
+0721P034,Produção sucroalcooleira - Sequencial
+0721P043,Produção de cerveja - Tecnológico
+0722C013,Cerâmica - Tecnológico
+0722C023,Ciências dos materiais - Tecnológico
+0722C024,Ciências dos materiais - Sequencial
+0722E012,Engenharia de materiais - Bacharelado
+0722P013,Papel e celulose - Tecnológico
+0722P022,Polímeros - Bacharelado
+0722P023,Polímeros - Tecnológico
+0722P033,Produção joalheira - Tecnológico
+0722P043,Produção moveleira - Tecnológico
+0723E012,Engenharia têxtil - Bacharelado
+0723P013,Produção de vestuário - Tecnológico
+0723P022,Produção têxtil - Bacharelado
+0723P023,Produção têxtil - Tecnológico
+0724E012,Engenharia de minas - Bacharelado
+0724E022,Engenharia de petróleo - Bacharelado
+0724E032,Engenharia geológica - Bacharelado
+0724M013,Mineração - Tecnológico
+0724P013,Petróleo e gás - Tecnológico
+0724R013,Rochas ornamentais - Tecnológico
+0725E012,Engenharia de manufatura - Bacharelado
+0725E013,Engenharia de manufatura - Tecnológico
+0725E022,Engenharia de produção - Bacharelado
+0725E032,Engenharia industrial - Bacharelado
+0725P013,Produção gráfica - Tecnológico
+0725P023,Produção industrial - Tecnológico
+0731A013,Agrimensura - Tecnológico
+0731A022,Arquitetura e urbanismo - Bacharelado
+0731A023,Arquitetura e urbanismo - Tecnológico
+0731A024,Arquitetura e urbanismo - Sequencial
+0731E012,Engenharia cartográfica - Bacharelado
+0731E022,Engenharia de agrimensura - Bacharelado
+0731E024,Engenharia de agrimensura - Sequencial
+0731E032,Engenharia de agrimensura e cartográfica - Bacharelado
+0732C013,Construção de edifícios - Tecnológico
+0732C023,Controle de obras - Tecnológico
+0732C024,Controle de obras - Sequencial
+0732E012,Engenharia civil - Bacharelado
+0732E022,Engenharia de recursos hídricos - Bacharelado
+0732E032,Engenharia de transportes - Bacharelado
+0732E042,Engenharia portuária - Bacharelado
+0732E053,Estradas - Tecnológico
+0732G013,Gestão de recursos hídricos - Tecnológico
+0732M013,Material de construção - Tecnológico
+0788P012,"Programas interdisciplinares abrangendo engenharia, produção e construção - Bacharelado"
+0811A012,Agroecologia - Bacharelado
+0811A013,Agroecologia - Tecnológico
+0811A022,Agroindústria - Bacharelado
+0811A023,Agroindústria - Tecnológico
+0811A024,Agroindústria - Sequencial
+0811A032,Agronegócio - Bacharelado
+0811A033,Agronegócio - Tecnológico
+0811A042,Agronomia - Bacharelado
+0811A043,Agronomia - Tecnológico
+0811A053,Agropecuária - Tecnológico
+0811C013,Cafeicultura - Tecnológico
+0811E012,Engenharia agrícola - Bacharelado
+0811E013,Engenharia agrícola - Tecnológico
+0811E022,Engenharia de biossistemas - Bacharelado
+0811F013,Fruticultura - Tecnológico
+0811F014,Fruticultura - Sequencial
+0811I013,Irrigação e drenagem - Tecnológico
+0811M013,Manejo da produção agrícola - Tecnológico
+0811V012,Viticultura e enologia - Bacharelado
+0811V013,Viticultura e enologia - Tecnológico
+0811Z012,Zootecnia - Bacharelado
+0811Z013,Zootecnia - Tecnológico
+0811Z014,Zootecnia - Sequencial
+0812H013,Horticultura - Tecnológico
+0821E012,Engenharia florestal - Bacharelado
+0821E013,Engenharia florestal - Tecnológico
+0821S013,Silvicultura - Tecnológico
+0831A012,Aquicultura - Bacharelado
+0831A013,Aquicultura - Tecnológico
+0831A014,Aquicultura - Sequencial
+0831E012,Engenharia de pesca - Bacharelado
+0831P013,Produção pesqueira - Tecnológico
+0841M012,Medicina veterinária - Bacharelado
+0841M013,Medicina veterinária - Tecnológico
+0841M014,Medicina veterinária - Sequencial
+0888P012,"Programas interdisciplinares abrangendo agricultura, silvicultura, pesca e veterinária - Bacharelado"
+0911O012,Odontologia - Bacharelado
+0911O014,Odontologia - Sequencial
+0912M012,Medicina - Bacharelado
+0912M013,Medicina - Tecnológico
+0912M014,Medicina - Sequencial
+0913E012,Enfermagem - Bacharelado
+0913E014,Enfermagem - Sequencial
+0914B012,Biomedicina - Bacharelado
+0914B014,Biomedicina - Sequencial
+0914O013,Oftálmica - Tecnológico
+0914O022,Optometria - Bacharelado
+0914O023,Optometria - Tecnológico
+0914P013,Prótese e órtese - Tecnológico
+0914P014,Prótese e órtese - Sequencial
+0914R013,Radiologia - Tecnológico
+0914R014,Radiologia - Sequencial
+0915E012,Educação física - Bacharelado
+0915E014,Educação física  - Sequencial
+0915F012,Fisioterapia - Bacharelado
+0915F022,Fonoaudiologia - Bacharelado
+0915N012,Nutrição - Bacharelado
+0915N013,Nutrição - Tecnológico
+0915N014,Nutrição - Sequencial
+0915P012,Podologia - Bacharelado
+0915P013,Podologia - Tecnológico
+0915T012,Terapia ocupacional - Bacharelado
+0916F012,Farmácia - Bacharelado
+0916F013,Farmácia - Tecnológico
+0916F014,Farmácia - Sequencial
+0917M012,Musicoterapia - Bacharelado
+0917P012,Práticas integrativas - Bacharelado
+0917P013,Práticas integrativas - Tecnológico
+0917P014,Práticas integrativas - Sequencial
+0918S012,Saúde coletiva - Bacharelado
+0918S013,Saúde coletiva - Tecnológico
+0918S014,Saúde coletiva - Sequencial
+0918S022,Saúde pública - Bacharelado
+0918S023,Saúde pública - Tecnológico
+0918S024,Saúde pública - Sequencial
+0921A014,Assistência a idosos e a deficientes - Sequencial
+0921G012,Gerontologia - Bacharelado
+0921G013,Gerontologia - Tecnológico
+0921G014,Gerontologia - Sequencial
+0923S012,Serviço social - Bacharelado
+0923S013,Serviço social - Tecnológico
+0923S014,Serviço social - Sequencial
+0988P012,Programas interdisciplinares abrangendo saúde e bem-estar - Bacharelado
+0988P013,Programas interdisciplinares abrangendo saúde e bem-estar - Tecnológico
+0988P014,Programas interdisciplinares abrangendo saúde e bem-estar - Sequencial
+1011E012,Economia doméstica - Bacharelado
+1012E012,Estética e cosmética - Bacharelado
+1012E013,Estética e cosmética - Tecnológico
+1012E014,Estética e cosmética - Sequencial
+1013G012,Gastronomia - Bacharelado
+1013G013,Gastronomia - Tecnológico
+1013G014,Gastronomia - Sequencial
+1014F013,Formação de técnicos e treinadores esportivos - Tecnológico
+1014F014,Formação de técnicos e treinadores esportivos - Sequencial
+1014G012,Gestão desportiva e de lazer - Bacharelado
+1014G013,Gestão desportiva e de lazer - Tecnológico
+1014G014,Gestão desportiva e de lazer - Sequencial
+1015E013,Eventos - Tecnológico
+1015E014,Eventos - Sequencial
+1015H012,Hotelaria - Bacharelado
+1015H013,Hotelaria - Tecnológico
+1015H014,Hotelaria - Sequencial
+1015T012,Turismo - Bacharelado
+1015T013,Turismo - Tecnológico
+1015T014,Turismo - Sequencial
+1022S012,Segurança no trabalho - Bacharelado
+1022S013,Segurança no trabalho - Tecnológico
+1022S014,Segurança no trabalho - Sequencial
+1031C012,Ciências militares - Bacharelado
+1032I013,Investigação e perícia - Tecnológico
+1032I014,Investigação e perícia - Sequencial
+1032S013,Segurança no trânsito - Tecnológico
+1032S014,Segurança no trânsito - Sequencial
+1032S023,Segurança privada - Tecnológico
+1032S024,Segurança privada - Sequencial
+1032S032,Segurança pública - Bacharelado
+1032S033,Segurança pública - Tecnológico
+1032S034,Segurança pública - Sequencial
+1032S043,Serviços penais - Tecnológico
+1032S044,Serviços penais - Sequencial
+1041C012,Ciências aeronáuticas - Bacharelado
+1041C013,Ciências aeronáuticas - Tecnológico
+1041C014,Ciências aeronáuticas - Sequencial
+1041G013,Gestão portuária - Tecnológico
+1041G014,Gestão portuária - Sequencial
+1041T013,Transporte aéreo - Tecnológico
+1041T023,Transporte terrestre - Tecnológico
+1041T024,Transporte terrestre  - Sequencial
+142A01,Processos Escolares - Tecnológico
+142C01,Pedagogia (Ciências da Educação) - Bacharelado
+142P01,Pedagogia - Licenciatura
+144F12,Licenciatura Interdisciplinar em Ciências Humanas - Licenciatura
+144F13,Licenciatura Intercultural Indígena - Licenciatura 
+145F01,Ciências Biológicas - Licenciatura
+145F02,Ciências Naturais - Licenciatura
+145F05,Educação Religiosa - Licenciatura
+145F08,Filosofia - Licenciatura
+145F09,Física - Licenciatura
+145F10,Geografia - Licenciatura
+145F11,História - Licenciatura
+145F14,Letras - Língua Estrangeira - Licenciatura
+145F15,Letras - Língua Portuguesa - Licenciatura
+145F17,Letras - Língua Portuguesa e Estrangeira - Licenciatura
+145F18,Matemática - Licenciatura
+145F21,Química - Licenciatura
+145F24,Ciências Sociais - Licenciatura
+145F28,Libras - Licenciatura
+146F02,Licenciatura Interdisciplinar em Artes (Educação Artística) - Licenciatura
+146F04,Artes Visuais - Licenciatura
+146F05,Informática - Licenciatura
+146F07,Dança - Licenciatura
+146F09,Licenciatura Interdisciplinar em Educação no Campo - Licenciatura
+146F15,Educação Física - Licenciatura
+146F20,Música - Licenciatura
+146F22,Teatro - Licenciatura
+146P01,Licenciatura para a Educação Profissional e Tecnológica - Licenciatura
+210A01,Bacharelado Interdisciplinar em Artes - Bacharelado
+211A02,Artes Visuais - Bacharelado
+212C02,Produção cênica - Tecnológico
+212D01,Dança - Bacharelado
+212M02,Música - Bacharelado
+212T01,Teatro - Bacharelado
+213A05,Produção audiovisual - Tecnológico
+213C06,Design gráfico - Tecnológico
+213C07,Carnaval - Tecnológico
+213F01,Fotografia - Tecnológico
+213P02,Produção multimídia - Tecnológico
+213P03,Produção fonográfica - Tecnológico
+213P05,Produção publicitária - Tecnológico
+213P07,Produção Cultural - Tecnológico
+214D02,Design de moda - Tecnológico
+214D05,Design - Bacharelado
+214D06,Design de Interiores  - Tecnológico
+214M01,Moda - Bacharelado
+214P01,Design de produto - Tecnológico
+215C02,Conservação e restauro - Tecnológico
+215F01,Fabricação de Instrumentos Musicais - Tecnológico
+220H01,Bacharelado Interdisciplinar Ciências Humanas - Bacharelado 
+220L03,Letras - Língua Portuguesa e Estrangeira - Bacharelado
+221T01,Teologia - Bacharelado
+222L01,Letras - Língua Estrangeira - Bacharelado
+223C01,Comunicação assistiva - Tecnológico
+223L01,Letras - Língua Portuguesa - Bacharelado
+223L02,Libras - Bacharelado
+225A01,Arqueologia - Bacharelado
+225H01,História - Bacharelado
+225M01,Museologia - Bacharelado
+225M02,Museografia - Tecnológico
+226F01,Filosofia - Bacharelado
+310C02,Ciências Sociais - Bacharelado
+311P02,Psicologia - Bacharelado
+312A01,Antropologia - Bacharelado
+313C01,Ciência política - Bacharelado
+313R01,Relações Internacionais - Bacharelado
+314E02,Ciências Econômicas - Bacharelado
+321C01,Cinema e Audiovisual - Bacharelado
+321C02,Comunicação Social (Área Geral) - Bacharelado
+321J01,Jornalismo - Bacharelado
+321R01,"Radio, TV, Internet - Bacharelado"
+322A01,Arquivologia - Bacharelado
+322B01,Biblioteconomia - Bacharelado
+340N02,Comércio exterior - Tecnológico
+341N01,Negócios imobiliários - Tecnológico
+342C01,Comunicação institucional - Tecnológico
+342M02,Marketing - Tecnológico
+342P02,Publicidade e Propaganda - Bacharelado
+342R01,Relações Públicas - Bacharelado
+343S01,Gestão de Seguros - Teconológico
+344C02,Ciências Contábeis - Bacharelado
+345A01,Administração - Bacharelado
+345A02,Gestão de cooperativas  - Tecnológico
+345A07,Gestão hospitalar  - Tecnológico
+345A10,Gestão pública  - Tecnológico
+345C01,Processos gerenciais  - Tecnológico
+345G09,Gestão de recursos humanos  - Tecnológico
+345G10,Gestão da qualidade  - Tecnológico
+345G13,Logística  - Tecnológico
+345G16,Gestão comercial  - Tecnológico
+345G17,Gestão financeira  - Tecnológico
+345G26,Gestão de segurança privada - Tecnológico
+346S01,Secretariado  - Tecnológico
+346S03,Secretariado Executivo - Bacharelado
+380D01,Direito - Bacharelado
+421B07,Biomedicina - Bacharelado
+421B12,Biotecnologia - Tecnológico
+421C01,Ciências Biológicas - Bacharelado
+422S01,Saneamento ambiental - Tecnológico
+440C01,Bacharelado Interdisciplinar em Ciência e Tecnologia  - Bacharelado
+441F01,Física - Bacharelado
+441R01,Física Medica e Radioterapia - Bacharelado
+442Q01,Química - Bacharelado
+443C01,Ciência da Terra - Licenciatura
+443G03,Geofísica - Bacharelado
+443G05,Geografia - Bacharelado
+443G06,Geologia - Bacharelado
+443M01,Meteorologia - Bacharelado
+443O01,Oceanografia - Bacharelado
+461M01,Matemática - Bacharelado
+462C01,Ciências Atuariais - Bacharelado
+462E01,Estatística - Bacharelado
+481A01,Redes de computadores - Tecnológico
+481B01,Banco de dados - Tecnológico
+481C01,Ciência da Computação - Bacharelado
+481T01,Gestão da tecnologia da informação - Tecnológico
+481T02,Jogos Digitais - Tecnológico
+482U01,Sistemas para internet - Tecnológico
+483S01,Análise e desenvolvimento de sistemas / Segurança da informação - Tecnológico
+483S02,Sistemas de Informação - Bacharelado
+520A01,Automação industrial - Tecnológico
+520E01,Engenharia - Bacharelado
+520E04,Engenharia de Materiais - Bacharelado
+520E05,Engenharia de Produção - Bacharelado
+520E09,Engenharia Ambiental e Sanitária - Bacharelado
+520G01,Geoprocessamento - Tecnológico
+520M01,Manutenção industrial - Tecnológico
+520P02,Gestão da produção industrial - Tecnológico
+520T01,Gestão de telecomunicações - Tecnológico
+521E05,Engenharia Mecânica - Bacharelado
+521E06,Engenharia Metalúrgica - Bacharelado
+521M03,Mecânica de precisão - Tecnológico
+521T02,Processos metalúrgicos - Tecnológico
+521T03,Fabricação mecânica - Tecnológico
+522D02,Sistemas elétricos - Tecnológico
+522E06,Engenharia Elétrica - Bacharelado
+522E08,Sistemas de energia - Tecnológico
+522R01,Refrigeração/Aquecimento - Tecnológico
+522T02,Eletrotécnica industrial - Tecnológico
+523B01,Engenharia Biomédica - Bacharelado
+523E04,Engenharia de Computação - Bacharelado
+523E09,Engenharia Eletrônica - Bacharelado
+523E10,Engenharia mecatrônica - Bacharelado
+523E11,Engenharia de Controle e Automação - Bacharelado
+523E12,Engenharia de Telecomunicações - Bacharelado
+523M01,Sistemas biomédicos - Tecnológico
+523S03,Sistemas eletrônicos - Tecnológico
+523T01,Redes de telecomunicações / Sistemas de telecomunicações - Tecnológico
+523T04,Mecatrônica industrial - Tecnológico
+523T05,Telemática - Tecnológico
+523T06,Eletrônica industrial - Tecnológico
+524E01,Engenharia de Bioprocessos - Bacharelado
+524E06,Engenharia nuclear - Bacharelado
+524E07,Engenharia Química - Bacharelado
+524T03,Processos químicos - Tecnológico
+524T04,Biocombustíveis - Tecnológico
+525A01,Mecanização Agrícola - Tecnológico
+525C04,Construção naval - Tecnológico
+525E04,Engenharia Aeronáutica - Bacharelado
+525E05,Engenharia automotiva - Bacharelado
+525E08,Engenharia Naval - Bacharelado
+525M01,Manutenção de aeronaves - Tecnológico
+525S01,Sistemas Automotivos - Tecnológico
+540F02,Produção Joalheira/Design de jóias e gemas - Tecnológico
+540F03,Produção Gráfica  - Tecnológico
+541E01,Engenharia de Alimentos - Bacharelado
+541I02,Laticínios  - Tecnológico
+541P05,Processamento de Carnes  - Tecnológico
+541P09,Viticultura e Enologia  - Tecnológico
+541T01,Alimentos  - Tecnológico
+541T02,Produção Sucroalcooleira  - Tecnológico
+541T03,Produção de Cachaça  - Tecnológico
+542B01,Bioenergia - Tecnológico
+542E03,Engenharia Têxtil - Bacharelado
+542I01,Produção de vestuário  - Tecnológico
+542I02,Produção têxtil  - Tecnológico
+543C01,Cerâmica - Tecnológico
+543F03,Produção moveleira  - Tecnológico
+543F05,Papel e celulose  - Tecnológico
+543P06,Polímeros - Tecnológico
+544E01,Engenharia de Minas - Bacharelado
+544E05,Petróleo e gás  - Tecnológico
+544E07,Engenharia de Petróleo - Bacharelado
+544M02,Mineração e extração - Tecnológico
+544R01,Rochas ornamentais  - Tecnológico
+544T01,Tecnologia de Mineração - Tecnológico
+581A05,Arquitetura e Urbanismo - Bacharelado
+582A01,Obras hidráulicas - Tecnológico
+582A02,Agrimensura - Tecnológico
+582C05,Construção de Edifícios - Tecnológico
+582E02,Engenharia Cartográfica e de Agrimensura - Bacharelado
+582E03,Engenharia Civil - Bacharelado
+582M02,Material de construção - Tecnológico
+582O01,Controle de obras - Tecnológico
+582T04,Estradas - Tecnológico
+621A03,Agroindústria - Tecnológico
+621A04,Agronomia - Bacharelado
+621A06,Agroecologia - Tecnológico
+621E03,Engenharia Agrícola - Bacharelado
+621M02,Produção Agrícola - Tecnológico
+621T01,Irrigação e Drenagem - Tecnológico
+621T03,Agronegócio - Tecnológico
+621T04,Cafeicultura - Tecnológico
+621T05,Produção de Grãos - Tecnológico
+621Z01,Zootecnia - Bacharelado
+622H01,Horticultura - Tecnológico
+623E01,Engenharia Florestal - Bacharelado
+623S01,Silvicultura - Tecnológico
+624A01,Aqüicultura - Tecnológico
+624E01,Engenharia de Pesca - Bacharelado
+624T01,Produção Pesqueira - Tecnológico
+641M01,Medicina Veterinária - Bacharelado
+720E01,Educação Física - Bacharelado
+720N01,Naturologia - Bacharelado
+720S01,Bacharelado Interdisciplinar Ciências da Saúde - Bacharelado
+721M01,Medicina - Bacharelado
+721O02,Oftálmica - Tecnológico
+723E01,Enfermagem - Bacharelado
+724O01,Odontologia - Bacharelado
+725T06,Radiologia - Tecnológico
+726F01,Fisioterapia - Bacharelado
+726F03,Fonoaudiologia - Bacharelado
+726N02,Nutrição - Bacharelado
+726O01,Óptica e Optometria - Tecnológico 
+726Q01,Quiropraxia - Bacharelado
+726T01,Terapia Ocupacional - Bacharelado
+727F01,Farmácia - Bacharelado
+762S01,Serviço Social - Bacharelado
+811G01,Gastronomia - Tecnológico
+811H02,Hotelaria - Tecnológico
+811H03,Hotelaria Hospitalar - Tecnológico
+812E01,Eventos - Tecnológico
+812P01,Gestão de Turismo - Tecnológico
+812T01,Turismo - Bacharelado
+813F02,Futebol - Tecnológico
+813G02,Gestão desportiva e de lazer - Tecnológico
+814E02,Economia doméstica - Bacharelado
+815E01,Estética e Cosmética - Tecnológico
+840A01,Pilotagem profissional de aeronaves - Tecnológico
+840C04,Ciências Aeronáuticas - Bacharelado*
+840C05,Ciências Navais - Bacharelado*
+840N02,Sistemas de navegação fluvial - Tecnológico
+840S01,Gestão portuária - Tecnológico
+840S02,Transporte aéreo - Tecnológico
+840T02,Transporte terrestre - Tecnológico
+850G01,Processos ambientais / Gestão ambiental - Tecnológico
+861S02,Segurança no trânsito / Segurança pública - Tecnológico
+861S03,Serviços penais - Tecnológico
+862S01,Segurança no trabalho - Tecnológico
+863C01,Ciências Militares - Bacharelado*
+863C02,Ciências da Logística - Bacharelado*
+863F01,Formação Militar - Bacharelado*
+999990,Outro curso de formação superior - Licenciatura
+999991,Outro curso de formação superior - Bacharelado
+999992,Outro curso de formação superior - Tecnológico
+212999,Música e artes cênicas
+341999,Vendas em atacado e varejo
+523999,Eletrônica e automação
+525999,"Veículos a motor, construção naval e aeronáutica"
+621999,Produção agrícola e pecuária
+840999,Transportes e serviços
+862999,Saúde e segurança do trabalho
+343F01,"Finanças, bancos, seguros"
+347V01,Vida profissional
+443P01,Paleontologia
+520D01,Desenho industrial
+540F01,Fabricação e processamento
+1,Administração
+2,Agronomia/Geologia/Ciências da Terra
+3,Arquitetura e Urbanismo
+4,Artes Cênicas
+5,Astronomia
+6,Belas Artes/Artes Plásticas/Educação Artística
+7,Biblioteconomia
+8,Ciências
+9,Ciências Biológicas
+10,Ciências Sociais/Sociologia
+11,Comunicação Social
+12,Direito
+13,Educação Física
+14,Engenharia
+15,Estatística/Atuaria/Ciências Contábeis/Ciências Econômicas
+16,Estudos Sociais
+17,Filosofia
+18,Física
+19,Geografia
+20,História
+21,Informática/Computação/Processamento de Dados
+22,Letras/Literatura/Língua Portuguesa
+23,Letras/Literatura/Língua Estrangeira
+24,Licenciatura Intercultural Específica
+25,Matemática
+26,Medicina/Odontologia/Enfermagem/Farmácia
+27,Música
+28,Pedagogia/Ciências da Educação
+29,Psicologia
+30,Química
+31,Religião/Teologia
+32,Outros Cursos
