@@ -1,6 +1,4 @@
 import os
-import re
-import sys
 from glob import glob
 from time import sleep
 from zipfile import ZipFile, BadZipfile
@@ -15,22 +13,22 @@ import backoff
     backoff.expo,
     requests.exceptions.RequestException
 )
-def make_request(url):
+def make_request(url: str) -> None:
     try:
         with requests.get(url, stream=True, verify=False) as r:
             r.raise_for_status()
-            with open(f"data/zips/{year}.zip", 'wb') as f:
+            with open(f"../data/zips/{year}.zip", 'wb') as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
     except Exception as e:
         print(e)
 
 
-def test_zip(year):
-    ZipFile(f"data/zips/{year}.zip", 'r')
+def test_zip(year: int) -> None:
+    ZipFile(f"../data/zips/{year}.zip", 'r')
 
 
-def download_file(year):
+def download_file(year: year) -> None:
     url = f"https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_{year}.zip"
     logging.info(f"Downloading {url}")
     try:
@@ -39,26 +37,26 @@ def download_file(year):
     except (requests.exceptions.ChunkedEncodingError, BadZipfile) as e:
         sleep(100)
         try:
-            if f"data/zips/{year}.zip" in os.listdir():
+            if f"../data/zips/{year}.zip" in os.listdir():
                 os.remove(f"{year}.zip")
             make_request(url)
             test_zip(year)
         except Exception as e:
-            raise Exception(f"Download error: {e}")
+            raise Exception(f"Download error: {e}") from e
     except Exception as e:
-        raise Exception(f"Download error: {e}")
+        raise Exception(f"Download error: {e}") from e
 
     logging.info("Download complete")
 
 
-def unzip_file(year):
-    logging.info("Unziping")
-    with ZipFile(f"data/zips/{year}.zip", 'r') as zip:
+def unzip_file(year: int) -> None:
+    logging.info("Unzipping")
+    with ZipFile(f"../data/zips/{year}.zip", 'r') as zip:
         zip.extractall("data")
 
-    recursives_zips = [file for file in glob(f"*{year}/DADOS/*")
+    recursive_zips = [file for file in glob(f"*{year}/DADOS/*")
                        if ".rar" in file or ".zip" in file]
-    for recursive_zip_name in recursives_zips:
+    for recursive_zip_name in recursive_zips:
         subprocess.run(["unar", "-o", f"{year}/DADOS", recursive_zip_name])
         os.remove(f"{recursive_zip_name}")
 
