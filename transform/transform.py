@@ -31,7 +31,8 @@ def transform_integer_columns(df: pd.DataFrame) -> pd.DataFrame:
     integer_columns = [column for column in df.columns
                        if column.startswith("QT")]
     df[integer_columns] = df[integer_columns]. \
-        astype("Int32")
+        fillna(-1). \
+        astype("int16")
 
     df["NU_ANO_CENSO"] = df["NU_ANO_CENSO"]. \
         astype("int16")
@@ -41,7 +42,7 @@ def transform_integer_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
     categorical_columns = [column for column in df.columns if column.startswith("TP")] + [
-        'CO_LINGUA_INDIGENA_1', 'CO_LINGUA_INDIGENA_2', 'CO_LINGUA_INDIGENA_3'
+        "CO_LINGUA_INDIGENA_1", "CO_LINGUA_INDIGENA_2", "CO_LINGUA_INDIGENA_3"
     ]
     with open("map_categorical_columns.json") as file:
         map_categorical_columns = json.load(file)
@@ -65,16 +66,11 @@ def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def transform_identifier_columns(df: pd.DataFrame) -> pd.DataFrame:
-    identifier_columns = ['NU_DDD', 'NU_TELEFONE', 'NU_CNPJ_ESCOLA_PRIVADA',
-                          'NU_CNPJ_MANTENEDORA', 'CO_ESCOLA_SEDE_VINCULADA', 'CO_IES_OFERTANTE',
-                          'CO_DISTRITO', 'CO_ENTIDADE', 'CO_CEP']
+    identifier_columns = ["NU_DDD", "NU_TELEFONE", "NU_CNPJ_ESCOLA_PRIVADA",
+                          "NU_CNPJ_MANTENEDORA", "CO_ESCOLA_SEDE_VINCULADA", "CO_IES_OFERTANTE",
+                          "CO_DISTRITO", "CO_ENTIDADE", "CO_CEP",
+                          "CO_REGIAO", "CO_UF", "CO_MUNICIPIO", "CO_MESORREGIAO", "CO_MICRORREGIAO"]
     df[identifier_columns] = df[identifier_columns].astype("str")
-    return df
-
-
-def drop_columns(df: pd.DataFrame) -> pd.DataFrame:
-    columns_to_drop = ["CO_REGIAO", "CO_UF", 'CO_MUNICIPIO', 'CO_MESORREGIAO', 'CO_MICRORREGIAO']
-    df.drop(columns=columns_to_drop, inplace=True)
     return df
 
 
@@ -86,18 +82,16 @@ def main():
             encoding="latin1",
             low_memory=False
         )
-
+        df = transform_integer_columns(df)
         df = transform_identifier_columns(df)
         df = transform_categorical_columns(df)
-        df = transform_integer_columns(df)
         df = transform_date_columns(df)
         df = transform_boolean_columns(df)
-        df = drop_columns(df)
 
         df.to_parquet(
             "../data/transformed.parquet",
-            engine='pyarrow',
-            compression='snappy',
+            engine="pyarrow",
+            compression="snappy",
             index=None,
             partition_cols=["NU_ANO_CENSO"]
         )
