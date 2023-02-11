@@ -1,0 +1,3 @@
+./data/raw/**/*
+./data/transformed.parquet
+*.html

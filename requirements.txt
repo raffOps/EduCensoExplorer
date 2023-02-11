@@ -2,3 +2,6 @@ requests
 backoff
 duckdb
 pandas
+pyarrow
+jupyterlab
+pandas_profiling

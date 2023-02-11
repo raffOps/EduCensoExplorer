@@ -44,7 +44,7 @@ def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
     categorical_columns = [column for column in df.columns if column.startswith("TP")] + [
         "CO_LINGUA_INDIGENA_1", "CO_LINGUA_INDIGENA_2", "CO_LINGUA_INDIGENA_3"
     ]
-    with open("map_categorical_columns.json") as file:
+    with open("./transform/map_categorical_columns.json") as file:
         map_categorical_columns = json.load(file)
 
     if columns_not_mapped := set(categorical_columns).difference(
@@ -76,12 +76,21 @@ def transform_identifier_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 def main():
     for year in range(2016, 2022):
-        df = pd.read_csv(
-            f"../data/raw/{year}/dados/microdados_ed_basica_{year}.csv",
-            delimiter=";",
-            encoding="latin1",
-            low_memory=False
-        )
+        try:
+            df = pd.read_csv(
+                f"data/raw/{year}/dados/microdados_ed_basica_{year}.csv",
+                delimiter=";",
+                encoding="latin1",
+                low_memory=False
+            )
+        except FileNotFoundError:
+            df = pd.read_csv(
+                f"data/raw/{year}/dados/microdados_ed_basica_{year}.CSV",
+                delimiter=";",
+                encoding="latin1",
+                low_memory=False
+            )
+
         df = transform_integer_columns(df)
         df = transform_identifier_columns(df)
         df = transform_categorical_columns(df)
@@ -89,7 +98,7 @@ def main():
         df = transform_boolean_columns(df)
 
         df.to_parquet(
-            "../data/transformed.parquet",
+            "./data/transformed.parquet",
             engine="pyarrow",
             compression="snappy",
             index=None,

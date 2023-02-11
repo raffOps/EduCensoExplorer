@@ -14,21 +14,18 @@ import backoff
     requests.exceptions.RequestException
 )
 def make_request(url: str) -> None:
-    try:
-        with requests.get(url, stream=True, verify=False) as r:
-            r.raise_for_status()
-            with open(f"../data/zips/{year}.zip", 'wb') as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    f.write(chunk)
-    except Exception as e:
-        print(e)
+    with requests.get(url, stream=True, verify=False) as r:
+        r.raise_for_status()
+        with open(f"./data/raw/zips/{year}.zip", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
 
 
 def test_zip(year: int) -> None:
-    ZipFile(f"../data/zips/{year}.zip", 'r')
+    ZipFile(f"./data/raw/zips/{year}.zip", 'r')
 
 
-def download_file(year: year) -> None:
+def download_file(year: int) -> None:
     url = f"https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_{year}.zip"
     logging.info(f"Downloading {url}")
     try:
@@ -37,7 +34,7 @@ def download_file(year: year) -> None:
     except (requests.exceptions.ChunkedEncodingError, BadZipfile) as e:
         sleep(100)
         try:
-            if f"../data/zips/{year}.zip" in os.listdir():
+            if f"./data/raw/zips/{year}.zip" in os.listdir():
                 os.remove(f"{year}.zip")
             make_request(url)
             test_zip(year)
@@ -51,13 +48,13 @@ def download_file(year: year) -> None:
 
 def unzip_file(year: int) -> None:
     logging.info("Unzipping")
-    with ZipFile(f"../data/zips/{year}.zip", 'r') as zip:
-        zip.extractall("data")
+    with ZipFile(f"./data/raw/zips/{year}.zip", 'r') as zip:
+        zip.extractall("data/raw")
 
     recursive_zips = [file for file in glob(f"*{year}/DADOS/*")
                        if ".rar" in file or ".zip" in file]
     for recursive_zip_name in recursive_zips:
-        subprocess.run(["unar", "-o", f"{year}/DADOS", recursive_zip_name])
+        subprocess.run(["unar", "-o", f"./data/raw/{year}/DADOS", recursive_zip_name])
         os.remove(f"{recursive_zip_name}")
 
     logging.info("Unzip complete")
