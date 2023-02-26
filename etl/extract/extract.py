@@ -54,7 +54,7 @@ def unzip_file(year: int) -> None:
     recursive_zips = [file for file in glob(f"*{year}/DADOS/*")
                        if ".rar" in file or ".zip" in file]
     for recursive_zip_name in recursive_zips:
-        subprocess.run(["unar", "-o", f"./data/raw/{year}/DADOS", recursive_zip_name])
+        subprocess.run(["unar", "-o", f"./data/raw/{year}/DADOS", year])
         os.remove(f"{recursive_zip_name}")
 
     logging.info("Unzip complete")

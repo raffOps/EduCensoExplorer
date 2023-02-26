@@ -1,0 +1,6 @@
+streamlit
+altair
+pandas
+numpy
+duckdb
+pyarrow
