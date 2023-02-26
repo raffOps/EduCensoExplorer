@@ -57,11 +57,13 @@ def run_query_numero_de_escolas(dimension: str) -> pd.DataFrame:
     return con.execute(query).df()
 
 
-"# Censo escolar"
+"# Censo escolar "
 
 con = init_connection()
 metric = st.sidebar.selectbox("Métrica", metrics)
 dimension = st.sidebar.selectbox("Dimensão", dimensions.keys())
+
+f"{metric.upper()} x {dimension.upper()}"
 
 match metric:
     case "Quantidade de matrículas":
