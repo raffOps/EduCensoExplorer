@@ -1,11 +1,11 @@
 # Ignore everything
 *
 
+
 # Allow files and directories
 !data/raw/zips/.gitkeep
-!data/transformed.parquet/
-!etl
-!.dockerignore
+!data/transformed.parquet
+!etldfsgfdgfdsgg
 !.gitignore
 !Dockerfile
 !README.md
