@@ -3,7 +3,7 @@
 
 # Allow files and directories
 !data/raw/zips/.gitkeep
-!data/transformed.parquet/
+!data/transformed.parquet
 !etl
 !.dockerignore
 !.gitignore
