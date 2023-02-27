@@ -1,5 +1,4 @@
 requests
 backoff
 pandas
-jupyterlab
-pandas_profiling
+pyarrow

@@ -1,14 +1,14 @@
 setup_etl:
-	docker build -t censo_etl etl
+	docker build -t etl etl
 
-extract_and_transform:
-	docker run -v ${PWD}/data/raw:/censo/data/raw censo_etl python extract/extract.py
-	docker run -v ${PWD}/data:/censo/data censo python transform/transform.py
+run_etl:
+	docker run -v ${PWD}/data:/censo/data etl python extract/extract.py
+	docker run -v ${PWD}/data:/censo/data etl python transform/transform.py
 
 setup_app:
-	docker build -t app app
+	docker build -t app .
 
 run_app:
-	docker run  -v ${PWD}/data/transformed.parquet:/app/data/transformed.parquet  -v ${PWD}/app:/app -p 8501:8501 app
+	docker run  -v ${PWD}/data/transformed.parquet:/app/data/transformed.parquet  -v ${PWD}:/app -p 8501:8501 app
 
 
