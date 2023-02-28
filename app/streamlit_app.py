@@ -20,7 +20,7 @@ dimensions = {
 @st.cache_resource
 def init_db_connection() -> duckdb.DuckDBPyConnection:
     con = duckdb.connect()
-    dataset = ds.dataset("../data/transformed.parquet", format="parquet", partitioning="hive")
+    dataset = ds.dataset("data/transformed.parquet", format="parquet", partitioning="hive")
     con.register("censo", dataset)
     return con
 
