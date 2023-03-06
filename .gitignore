@@ -1,14 +1,10 @@
 # Ignore everything
-*
-
-# Allow files and directories
-!data/raw/zips/.gitkeep
-!data/transformed.parquet
-!etl
-!.dockerignore
-!.gitignore
-!Dockerfile
-!README.md
-!app
-
-
+*.zip
+*.csv
+*.ods
+*.xlsx
+*.CSV
+*.pdf
+data/**/*.txt
+.idea
+*.db
