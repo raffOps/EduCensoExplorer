@@ -35,15 +35,10 @@ def download_file(year: int) -> None:
         test_zip(year)
     except (requests.exceptions.ChunkedEncodingError, BadZipfile) as e:
         sleep(100)
-        try:
-            if f"./data/raw/microdados/zips/{year}.zip" in os.listdir():
-                os.remove(f"{year}.zip")
-            make_request(url)
-            test_zip(year)
-        except Exception as e:
-            raise Exception(f"Download error: {e}") from e
-    except Exception as e:
-        raise Exception(f"Download error: {e}") from e
+        if f"./data/raw/microdados/zips/{year}.zip" in os.listdir():
+            os.remove(f"{year}.zip")
+        make_request(url)
+        test_zip(year)
 
     logger.debug("Download complete")
 

@@ -51,8 +51,8 @@ def transform_integer_columns(df: pd.DataFrame) -> pd.DataFrame:
     integer_columns = [column for column in df.columns
                        if column.startswith("QT")]
     df[integer_columns] = df[integer_columns]. \
-        fillna(-1). \
-        astype("int16")
+        fillna(0). \
+        astype("int32")
 
     df["NU_ANO_CENSO"] = df["NU_ANO_CENSO"]. \
         astype("int16")
@@ -81,16 +81,19 @@ def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
                 replace(map_categorical_columns[column])
         else:
             print(f"{column} not mapped")
-    df[categorical_columns] = df[categorical_columns].replace(["-1", "9"], "")
+    df[categorical_columns] = df[categorical_columns].replace(["-1", "9"], None)
     return df
 
 
 def transform_identifier_columns(df: pd.DataFrame) -> pd.DataFrame:
     identifier_columns = ["NU_DDD", "NU_TELEFONE", "NU_CNPJ_ESCOLA_PRIVADA",
                           "NU_CNPJ_MANTENEDORA", "CO_ESCOLA_SEDE_VINCULADA", "CO_IES_OFERTANTE",
-                          "CO_DISTRITO", "CO_ENTIDADE", "CO_CEP",
-                          "CO_REGIAO", "CO_UF", "CO_MUNICIPIO", "CO_MESORREGIAO", "CO_MICRORREGIAO"]
+                          "CO_DISTRITO", "CO_CEP",
+                          "CO_REGIAO", "CO_UF", "CO_MESORREGIAO", "CO_MICRORREGIAO"]
     df[identifier_columns] = df[identifier_columns].astype("str")
+
+    identifier_columns_int = ["CO_MUNICIPIO", "CO_ENTIDADE"]
+    df[identifier_columns_int] = df[identifier_columns_int].astype("int64")
     return df
 
 

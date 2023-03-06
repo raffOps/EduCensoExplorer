@@ -7,3 +7,6 @@
 data/**/*.txt
 .idea
 *.db
+/file.db.wal
+/file.db
+*.DS_Store
