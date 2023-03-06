@@ -2,3 +2,6 @@ requests
 backoff
 pandas
 pyarrow
+openpyxl
+polars
+xlsx2csv
