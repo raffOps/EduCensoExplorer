@@ -1,13 +1,17 @@
 import logging
+import os
+import itertools
+
 import pandas as pd
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(name="indicadores - transform")
 
 INDICADORES = {
-    #"AFD": "Adequação da Formação Docente",
-    #"ICG": "Complexidade de Gestão da Escola",
-    #"IED": "Esforço Docente",
-    #"ATU": "Média de Alunos por Turma",
+    "AFD": "Adequação da Formação Docente",
+    "ICG": "Complexidade de Gestão da Escola",
+    "IED": "Esforço Docente",
+    "ATU": "Média de Alunos por Turma",
     "HAD": "Média de Horas-aula diária",
     "DSU": "Percentual de Docentes com Curso Superior",
     "TDI": "Taxas de Distorção Idade-série"
@@ -16,44 +20,46 @@ INDICADORES = {
 
 def get_dataframe(indicador, year):
     file = f"./data/raw/{indicador}/{indicador}_{year}_ESCOLAS/{indicador}_ESCOLAS_{year}.xlsx"
+    if not os.path.isfile(file):
+        file = f"./data/raw/{indicador}/{indicador}_{year}_ESCOLAS/{indicador}_ESCOLAS_{year}_ATUALIZADO.xlsx"
+        if not os.path.isfile(file):
+            raise FileNotFoundError(file)
     try:
         match indicador:
-            case "ATU" | "HAD" | "DSU":
+            case "ATU" | "HAD" | "TDI":
                 df = pd.read_excel(file, skiprows=8, skipfooter=6, na_values=["--"])
-                df["CO_ENTIDADE"], df["NO_ENTIDADE"] = df["NO_ENTIDADE"], df["CO_ENTIDADE"]
-                df["CO_MUNICIPIO"], df["NO_MUNICIPIO"] = df["NO_MUNICIPIO"], df["CO_MUNICIPIO"]
+            case "DSU":
+                df = pd.read_excel(file, skiprows=9, skipfooter=6, na_values=["--"])
             case _:
-                print("aqui")
                 df = pd.read_excel(file, skiprows=10, skipfooter=6, na_values=["--"])
         return df
-    except FileNotFoundError:
-        raise FileNotFoundError(file)
+    except FileNotFoundError as e:
+        raise FileNotFoundError(file) from e
 
 
 def transform_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     # rename columns
-    df.rename(
-        columns={
-            "Ano": "NU_ANO_CENSO",
-            "SIGLA": "SG_UF",
-            "PK_COD_MUNICIPIO": "CO_MUNICIPIO",
-            "PK_COD_ENTIDADE": "CO_ENTIDADE",
-            "TIPOLOCA": "NO_CATEGORIA",
-            "Dependad": "NO_DEPENDENCIA"
-        },
-        inplace=True
+    columns = ['NU_ANO_CENSO', 'NO_REGIAO', 'SG_UF', 'CO_MUNICIPIO', 'NO_MUNICIPIO',
+       'CO_ENTIDADE', 'NO_ENTIDADE', 'NO_CATEGORIA', 'NO_DEPENDENCIA']
+    df = df.rename(
+        columns=dict(zip(df.columns[:9], columns))
     )
+    df = get_melted_dataframe(df)
+    df = force_schema(df)
+    df = df.drop(columns=["NO_ENTIDADE"])
+    return df
 
-    # melt
+
+def get_melted_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     id_vars = df.columns[:9]
     value_vars = df.columns[9:]
     df = df.melt(id_vars=id_vars, value_vars=value_vars, var_name="GRUPO", value_name="METRICA")
+    return df
 
-    # type
-    df["NU_ANO_CENSO"] = df["NU_ANO_CENSO"].astype("int32")
+
+def force_schema(df: pd.DataFrame) -> pd.DataFrame:
     df[["CO_MUNICIPIO", "CO_ENTIDADE"]] = df[["CO_MUNICIPIO", "CO_ENTIDADE"]].astype("int64")
-
-    df = df.drop(columns=["NO_ENTIDADE"])
+    df["NU_ANO_CENSO"] = df["NU_ANO_CENSO"].astype("int32")
     return df
 
 
@@ -68,13 +74,11 @@ def save_to_parquet(df: pd.DataFrame, indicador) -> None:
 
 
 def main():
-    logger = logging.getLogger(name="indicadores - transform")
-    for indicador in INDICADORES:
-        for year in range(2016, 2022):
-            logger.info(f"{indicador} - {year}")
-            df = get_dataframe(indicador, year)
-            df = transform_dataframe(df)
-            save_to_parquet(df, indicador)
+    for indicador, year in itertools.product(INDICADORES, range(2016, 2022)):
+        logger.info(f"{indicador} - {year}")
+        df = get_dataframe(indicador, year)
+        df = transform_dataframe(df)
+        save_to_parquet(df, indicador)
 
 
 if __name__ == "__main__":

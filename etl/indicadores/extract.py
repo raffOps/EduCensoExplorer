@@ -2,11 +2,13 @@ import os
 from time import sleep
 from zipfile import ZipFile, BadZipfile
 import logging
+import itertools
 
 import requests
 import backoff
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("etl - indicadores")
+logger = logging.getLogger("indicadores - extraction")
+
 
 @backoff.on_exception(
     backoff.expo,
@@ -32,15 +34,10 @@ def download_file(year: int, indicador: str) -> None:
         test_zip(year, indicador)
     except (requests.exceptions.ChunkedEncodingError, BadZipfile) as e:
         sleep(100)
-        try:
-            if f"./data/raw/{indicador}/zips/{year}.zip" in os.listdir():
-                os.remove(f"./data/raw/{indicador}/zips/{year}.zip")
-            make_request(year, indicador)
-            test_zip(year, indicador)
-        except Exception as e:
-            raise Exception(f"Download error: {e}") from e
-    except Exception as e:
-        raise Exception(f"Download error: {e}") from e
+        if f"./data/raw/{indicador}/zips/{year}.zip" in os.listdir():
+            os.remove(f"./data/raw/{indicador}/zips/{year}.zip")
+        make_request(year, indicador)
+        test_zip(year, indicador)
 
     logger.debug("Download complete")
 
@@ -56,14 +53,13 @@ def unzip_file(year: int, indicador: str) -> None:
 if __name__ == "__main__":
     indicadores = {
         "AFD": "Adequação da Formação Docente",
-        "ICG": "Complexidade de Gestão da Escola",
-        "IED": "Esforço Docente",
-        "ATU": "Média de Alunos por Turma",
-        "HAD": "Média de Horas-aula diária",
-        "DSU": "Percentual de Docentes com Curso Superior",
-        "TDI": "Taxas de Distorção Idade-série"
+        # "ICG": "Complexidade de Gestão da Escola",
+        # "IED": "Esforço Docente",
+        # "ATU": "Média de Alunos por Turma",
+        # "HAD": "Média de Horas-aula diária",
+        # "DSU": "Percentual de Docentes com Curso Superior",
+        # "TDI": "Taxas de Distorção Idade-série"
     }
-    for year in range(2016, 2022):
-        for indicador in indicadores:
-            download_file(year, indicador)
-            unzip_file(year, indicador)
+    for year, indicador in itertools.product(range(2016, 2022), indicadores):
+        download_file(year, indicador)
+        unzip_file(year, indicador)
