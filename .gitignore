@@ -10,3 +10,5 @@ data/**/*.txt
 /file.db.wal
 /file.db
 *.DS_Store
+*.pyc
+/**/__pycache__
