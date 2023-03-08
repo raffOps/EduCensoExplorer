@@ -53,13 +53,13 @@ def unzip_file(year: int, indicador: str) -> None:
 if __name__ == "__main__":
     indicadores = {
         "AFD": "Adequação da Formação Docente",
-        # "ICG": "Complexidade de Gestão da Escola",
-        # "IED": "Esforço Docente",
-        # "ATU": "Média de Alunos por Turma",
-        # "HAD": "Média de Horas-aula diária",
-        # "DSU": "Percentual de Docentes com Curso Superior",
-        # "TDI": "Taxas de Distorção Idade-série"
+        "ICG": "Complexidade de Gestão da Escola",
+        "IED": "Esforço Docente",
+        "ATU": "Média de Alunos por Turma",
+        "HAD": "Média de Horas-aula diária",
+        "DSU": "Percentual de Docentes com Curso Superior",
+        "TDI": "Taxas de Distorção Idade-série"
     }
-    for year, indicador in itertools.product(range(2016, 2022), indicadores):
+    for year, indicador in itertools.product(range(2022, 2023), indicadores):
         download_file(year, indicador)
         unzip_file(year, indicador)

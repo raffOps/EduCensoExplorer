@@ -9,7 +9,7 @@ import requests
 import backoff
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("etl - microdados")
+logger = logging.getLogger("microdados - extract")
 
 @backoff.on_exception(
     backoff.expo,
@@ -48,16 +48,10 @@ def unzip_file(year: int) -> None:
     with ZipFile(f"./data/raw/microdados/zips/{year}.zip", 'r') as zip:
         zip.extractall("data/raw/microdados")
 
-    recursive_zips = [file for file in glob(f"*{year}/DADOS/*")
-                       if ".rar" in file or ".zip" in file]
-    for recursive_zip_name in recursive_zips:
-        subprocess.run(["unar", "-o", f"./data/raw/microdados/{year}/DADOS", year])
-        os.remove(f"{recursive_zip_name}")
-
     logger.debug("Unzip complete")
 
 
 if __name__ == "__main__":
-    for year in range(2016, 2022):
+    for year in range(2022, 2023):
         download_file(year)
         unzip_file(year)

@@ -7,7 +7,7 @@ import pandas as pd
 logging.basicConfig(level=logging.INFO)
 
 
-def get_dataframe(year: int) -> pd.DataFrame:
+def load_dataframe(year: int) -> pd.DataFrame:
     try:
         df = pd.read_csv(
             f"./data/raw/microdados/{year}/dados/microdados_ed_basica_{year}.csv",
@@ -16,12 +16,21 @@ def get_dataframe(year: int) -> pd.DataFrame:
             low_memory=False
         )
     except FileNotFoundError:
-        df = pd.read_csv(
-            f"./data/raw/microdados/{year}/dados/microdados_ed_basica_{year}.CSV",
-            delimiter=";",
-            encoding="latin1",
-            low_memory=False
-        )
+        try:
+            df = pd.read_csv(
+                f"./data/raw/microdados/{year}/dados/microdados_ed_basica_{year}.CSV",
+                delimiter=";",
+                encoding="latin1",
+                low_memory=False
+            )
+        except FileNotFoundError:
+            df = pd.read_csv(
+                f"./data/raw/microdados/Microdados do Censo Escolar da Educaç╞o Básica {year}/dados/microdados_ed_basica_{year}.csv",
+                delimiter=";",
+                encoding="latin1",
+                low_memory=False
+            )
+
     return df
 
 
@@ -97,7 +106,7 @@ def transform_identifier_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def save_to_parquet(df: pd.DataFrame) -> None:
+def save_dataframe(df: pd.DataFrame) -> None:
     df.to_parquet(
         "./data/transformed/microdados.parquet",
         engine="pyarrow",
@@ -109,15 +118,15 @@ def save_to_parquet(df: pd.DataFrame) -> None:
 
 def main():
     logger = logging.getLogger(name="microdados - transform")
-    for year in range(2016, 2022):
+    for year in range(2022, 2023):
         logger.info(year)
-        df = get_dataframe(year)
+        df = load_dataframe(year)
         df = transform_integer_columns(df)
         df = transform_identifier_columns(df)
         df = transform_categorical_columns(df)
         df = transform_date_columns(df)
         df = transform_boolean_columns(df)
-        save_to_parquet(df)
+        save_dataframe(df)
 
 
 if __name__ == "__main__":
