@@ -16,6 +16,7 @@ logger = logging.getLogger("indicadores - extraction")
 )
 def make_request(year: int, indicador: str) -> None:
     url = f"https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/{year}/{indicador}_{year}_ESCOLAS.zip"
+    os.makedirs(f"./data/raw/{indicador}/zips", exist_ok=True)
     with requests.get(url, stream=True, verify=False) as r:
         r.raise_for_status()
         with open(f"./data/raw/{indicador}/zips/{year}.zip", 'wb') as f:

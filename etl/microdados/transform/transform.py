@@ -1,6 +1,8 @@
 from datetime import datetime
 import json
 import logging
+import os
+from shutil import rmtree
 
 import pandas as pd
 
@@ -10,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 def load_dataframe(year: int) -> pd.DataFrame:
     try:
         df = pd.read_csv(
-            f"./data/raw/microdados/{year}/dados/microdados_ed_basica_{year}.csv",
+            f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.csv",
             delimiter=";",
             encoding="latin1",
             low_memory=False
@@ -18,7 +20,7 @@ def load_dataframe(year: int) -> pd.DataFrame:
     except FileNotFoundError:
         try:
             df = pd.read_csv(
-                f"./data/raw/microdados/{year}/dados/microdados_ed_basica_{year}.CSV",
+                f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.CSV",
                 delimiter=";",
                 encoding="latin1",
                 low_memory=False
@@ -41,7 +43,7 @@ def transform_date_columns(df: pd.DataFrame) -> pd.DataFrame:
             apply(
             lambda date:
             datetime.strptime(date, "%d%b%Y:%H:%M:%S")
-            if isinstance(date, str)
+            if isinstance(date, str) and date != "0"
             else None
         )
     return df
@@ -118,6 +120,10 @@ def save_dataframe(df: pd.DataFrame) -> None:
 
 def main():
     logger = logging.getLogger(name="microdados - transform")
+    folder = f"./data/transformed/microdados.parquet"
+    if os.path.exists(folder):
+        logger.debug(f"Overwriting {folder}")
+        rmtree(folder)
     for year in range(2016, 2023):
         logger.info(year)
         df = load_dataframe(year)

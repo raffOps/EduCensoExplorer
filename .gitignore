@@ -4,7 +4,7 @@
 *.xlsx
 *.CSV
 *.pdf
-data/**/*.txt
+/data/**/*.txt
 .idea
 *.db
 /file.db.wal
@@ -13,3 +13,4 @@ data/**/*.txt
 *.pyc
 /**/__pycache__
 .ipynb_checkpoints
+/data/raw/

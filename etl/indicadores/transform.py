@@ -87,9 +87,6 @@ def get_dataframe_with_forced_schema(df: pd.DataFrame, indicador: str) -> pd.Dat
 
 def save_dataframe(df: pd.DataFrame, indicador) -> None:
     folder = f"./data/transformed/indicadores/{indicador}.parquet"
-    if os.path.exists(folder):
-        logger.debug(f"Overwriting {folder}")
-        rmtree(folder)
     df.to_parquet(
         folder,
         engine="pyarrow",
@@ -100,11 +97,16 @@ def save_dataframe(df: pd.DataFrame, indicador) -> None:
 
 
 def main():
-    for indicador, year in itertools.product(INDICADORES, range(2022, 2023)):
-        logger.info(f"{indicador} - {year}")
-        df = load_dataframe(indicador, year)
-        df = transform_dataframe(df, indicador)
-        save_dataframe(df, indicador)
+    for indicador in INDICADORES:
+        folder = f"./data/transformed/indicadores/{indicador}.parquet"
+        if os.path.exists(folder):
+            logger.debug(f"Overwriting {folder}")
+            rmtree(folder)
+        for year in range(2016, 2023):
+            logger.info(f"{indicador} - {year}")
+            df = load_dataframe(indicador, year)
+            df = transform_dataframe(df, indicador)
+            save_dataframe(df, indicador)
 
 
 if __name__ == "__main__":

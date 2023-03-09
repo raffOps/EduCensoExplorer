@@ -15,6 +15,7 @@ logger = logging.getLogger("microdados - extract")
     requests.exceptions.RequestException
 )
 def make_request(url: str) -> None:
+    os.makedirs(f"./data/raw/microdados/zips", exist_ok=True)
     with requests.get(url, stream=True, verify=False) as r:
         r.raise_for_status()
         with open(f"./data/raw/microdados/zips/{year}.zip", 'wb') as f:
@@ -45,7 +46,7 @@ def download_file(year: int) -> None:
 def unzip_file(year: int) -> None:
     logger.debug("Unzipping")
     with ZipFile(f"./data/raw/microdados/zips/{year}.zip", 'r') as zip:
-        zip.extractall("data/raw/microdados")
+        zip.extractall(f"data/raw/microdados")
 
     logger.debug("Unzip complete")
 
