@@ -100,7 +100,7 @@ def save_dataframe(df: pd.DataFrame, indicador) -> None:
 
 
 def main():
-    for indicador, year in itertools.product(INDICADORES, range(2016, 2022)):
+    for indicador, year in itertools.product(INDICADORES, range(2022, 2023)):
         logger.info(f"{indicador} - {year}")
         df = load_dataframe(indicador, year)
         df = transform_dataframe(df, indicador)

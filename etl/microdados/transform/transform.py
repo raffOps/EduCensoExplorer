@@ -118,7 +118,7 @@ def save_dataframe(df: pd.DataFrame) -> None:
 
 def main():
     logger = logging.getLogger(name="microdados - transform")
-    for year in range(2022, 2023):
+    for year in range(2016, 2023):
         logger.info(year)
         df = load_dataframe(year)
         df = transform_integer_columns(df)

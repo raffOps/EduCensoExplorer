@@ -1,8 +1,6 @@
 import os
-from glob import glob
 from time import sleep
 from zipfile import ZipFile, BadZipfile
-import subprocess
 import logging
 
 import requests
@@ -10,6 +8,7 @@ import backoff
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("microdados - extract")
+
 
 @backoff.on_exception(
     backoff.expo,
@@ -52,6 +51,6 @@ def unzip_file(year: int) -> None:
 
 
 if __name__ == "__main__":
-    for year in range(2022, 2023):
+    for year in range(2016, 2023):
         download_file(year)
         unzip_file(year)

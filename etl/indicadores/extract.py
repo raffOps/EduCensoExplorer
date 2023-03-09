@@ -60,6 +60,6 @@ if __name__ == "__main__":
         "DSU": "Percentual de Docentes com Curso Superior",
         "TDI": "Taxas de Distorção Idade-série"
     }
-    for year, indicador in itertools.product(range(2022, 2023), indicadores):
+    for year, indicador in itertools.product(range(2016, 2023), indicadores):
         download_file(year, indicador)
         unzip_file(year, indicador)
