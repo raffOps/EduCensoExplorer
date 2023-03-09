@@ -89,10 +89,12 @@ def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
     for column in categorical_columns:
         if column in map_categorical_columns.keys():
             df[column] = df[column]. \
-                replace(map_categorical_columns[column])
+                replace(to_replace=map_categorical_columns[column])
         else:
             print(f"{column} not mapped")
     df[categorical_columns] = df[categorical_columns].replace(["-1", "9"], None)
+    df["TP_CATEGORIA_ESCOLA_PRIVADA"] = df["TP_CATEGORIA_ESCOLA_PRIVADA"].\
+        replace(to_replace=["0", None], value="Pública")
     return df
 
 
