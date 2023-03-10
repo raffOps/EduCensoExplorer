@@ -7,33 +7,27 @@ from shutil import rmtree
 import pandas as pd
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(name="microdados - transform")
 
 
 def load_dataframe(year: int) -> pd.DataFrame:
-    try:
-        df = pd.read_csv(
-            f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.csv",
-            delimiter=";",
-            encoding="latin1",
-            low_memory=False
-        )
-    except FileNotFoundError:
+    patterns_filename = [
+        f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.csv",
+        f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.CSV",
+        f"./data/raw/microdados/Microdados do Censo Escolar da Educaç╞o Básica {year}/dados/microdados_ed_basica_{year}.csv",
+    ]
+    for pattern_filename in patterns_filename:
         try:
-            df = pd.read_csv(
-                f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.CSV",
+            return pd.read_csv(
+                pattern_filename,
                 delimiter=";",
                 encoding="latin1",
                 low_memory=False
             )
-        except FileNotFoundError:
-            df = pd.read_csv(
-                f"./data/raw/microdados/Microdados do Censo Escolar da Educaç╞o Básica {year}/dados/microdados_ed_basica_{year}.csv",
-                delimiter=";",
-                encoding="latin1",
-                low_memory=False
-            )
+        except FileNotFoundError as e:
+            logger.error(e)
 
-    return df
+    raise FileNotFoundError(patterns_filename)
 
 
 def transform_date_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -121,8 +115,7 @@ def save_dataframe(df: pd.DataFrame) -> None:
 
 
 def main():
-    logger = logging.getLogger(name="microdados - transform")
-    folder = f"./data/transformed/microdados.parquet"
+    folder = "./data/transformed/microdados.parquet"
     if os.path.exists(folder):
         logger.debug(f"Overwriting {folder}")
         rmtree(folder)
@@ -135,6 +128,7 @@ def main():
         df = transform_date_columns(df)
         df = transform_boolean_columns(df)
         save_dataframe(df)
+        logger.info(f"{year} finished")
 
 
 if __name__ == "__main__":
