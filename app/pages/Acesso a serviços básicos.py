@@ -143,6 +143,7 @@ def get_df_filtred(df: pd.DataFrame, service: str, dimension: str) -> pd.DataFra
 
 def plot(df: pd.DataFrame, service, dimension: str) -> None:
     df["dimensão | serviço"] = df.iloc[:, 1] + " | " + df.iloc[:, 2]
+    df["Nível de acesso em %"] = df["Taxa de acesso"] * 100
     tipo_plot = st.sidebar.selectbox(
         "Tipo de gráfico",
         ["Linha"]
@@ -152,7 +153,7 @@ def plot(df: pd.DataFrame, service, dimension: str) -> None:
             fig = px.line(
                 df,
                 x="Ano",
-                y="Taxa de acesso",
+                y="Nível de acesso em %",
                 color="dimensão | serviço",
                 markers=True,
                 title=f"{service} por {dimension.lower()}"
