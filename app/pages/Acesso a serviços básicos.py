@@ -1,31 +1,20 @@
 from typing import Any
+import json
 
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-from utils import DIMENSIONS, run_query, convert_df
+from utils import DIMENSOES, run_query, convert_df, load_geojson
 
-
-def get_df(serivce: str, dimension: str) -> pd.DataFrame:
-    dimensions = {
-        "Dependência Administrativa": "TP_DEPENDENCIA",
-        "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
-        "Localização": "TP_LOCALIZACAO",
-        "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA",
-        "Região Geográfica": "NO_REGIAO",
-        "Unidade da Federação": "NO_UF",
-        "Mesorregião": "NO_MESORREGIAO",
-        "Microrregião": "NO_MICRORREGIAO",
-        "Município": "NO_MUNICIPIO"
-    }
-
-    match serivce:
+@st.cache_data
+def get_df(servico: str, dimensao: str) -> pd.DataFrame:
+    match servico:
         case "Abastecimento de água":
             query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
-                    {dimensions[dimension]} as '{dimension}',
+                    {DIMENSOES[dimensao]} as '{dimensao}',
                     round(cast(count(*) filter (where IN_AGUA_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
                     round(cast(count(*) filter (where IN_AGUA_POCO_ARTESIANO) as float) / count(*), 3) as 'Poço artesiano',
                     round(cast(count(*) filter (where IN_AGUA_CACIMBA) as float) / count(*), 3) as 'Cacimba/Cisterna/Poço',
@@ -38,14 +27,14 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                group by NU_ANO_CENSO, {dimensions[dimension]}
+                group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
                 order by 1, 2
             """
         case "Abastecimento de energia elétrica":
             query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
-                    {dimensions[dimension]} as '{dimension}',
+                    {DIMENSOES[dimensao]} as '{dimensao}',
                     round(cast(count(*) filter (where IN_ENERGIA_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
                     round(cast(count(*) filter (where IN_ENERGIA_GERADOR_FOSSIL) as float) / count(*), 3) as 'Gerador movido a combustível fóssil',
                     round(cast(count(*) filter (where IN_ENERGIA_RENOVAVEL) as float) / count(*), 3) as 'Fontes de energia renováveis ou alternativas',
@@ -57,14 +46,14 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                group by NU_ANO_CENSO, {dimensions[dimension]}
+                group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
                 order by 1, 2
             """
         case "Esgoto sanitário":
             query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
-                    {dimensions[dimension]} as '{dimension}',
+                    {DIMENSOES[dimensao]} as '{dimensao}',
                     round(cast(count(*) filter (where IN_ESGOTO_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
                     round(cast(count(*) filter (where IN_ESGOTO_FOSSA_SEPTICA) as float) / count(*), 3) as 'Fossa Séptica',
                     round(cast(count(*) filter (where IN_ESGOTO_FOSSA_COMUM) as float) / count(*), 3) as 'Fossa rudimentar/comum',
@@ -77,14 +66,14 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                group by NU_ANO_CENSO, {dimensions[dimension]}
+                group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
                 order by 1, 2
             """
         case "Destinação do lixo":
             query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
-                    {dimensions[dimension]} as '{dimension}',
+                    {DIMENSOES[dimensao]} as '{dimensao}',
                     round(cast(count(*) filter (where IN_LIXO_SERVICO_COLETA) as float) / count(*), 3) as 'Servico de coleta',
                     round(cast(count(*) filter (where IN_LIXO_QUEIMA) as float) / count(*), 3) as 'Queima',
                     round(cast(count(*) filter (where IN_LIXO_ENTERRA) as float) / count(*), 3) as 'Enterra',
@@ -105,17 +94,17 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                group by NU_ANO_CENSO, {dimensions[dimension]}
+                group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
                 order by 1, 2
             """
         case "Acesso a internet":
             query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
-                    {dimensions[dimension]} as '{dimension}',
+                    {DIMENSOES[dimensao]} as '{dimensao}',
                     round(cast(count(*) filter (where IN_INTERNET) as float) / count(*), 3) as 'Acesso a internet',
                 from microdados
-                group by NU_ANO_CENSO, {dimensions[dimension]}
+                group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
                 order by 1, 2
             """
     df = run_query(query)
@@ -128,54 +117,82 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
     return df
 
 
-def get_df_filtred(df: pd.DataFrame, service: str, dimension: str) -> pd.DataFrame:
-    filter_service = st.sidebar.multiselect(
-        "Filtro serviço",
-        df["Serviço"].unique()
-    )
-    filter_dimension = st.sidebar.multiselect(
-        "Filtro dimensão",
-        df[dimension].unique()
-    )
-    df = df[df[dimension].isin(filter_dimension) & df["Serviço"].isin(filter_service)]
+@st.cache_data
+def get_df_filtrado(df: pd.DataFrame, filtro_servico: str) -> pd.DataFrame:
+    df = df[df["Serviço"].isin([filtro_servico])]
+    df["Nível de acesso em %"] = df["Taxa de acesso"] * 100
     return df
 
 
-def plot(df: pd.DataFrame, service, dimension: str) -> None:
-    df["dimensão | serviço"] = df.iloc[:, 1] + " | " + df.iloc[:, 2]
-    df["Nível de acesso em %"] = df["Taxa de acesso"] * 100
-    tipo_plot = st.sidebar.selectbox(
-        "Tipo de gráfico",
-        ["Linha"]
-    )
-    match tipo_plot:
+def plot(df: pd.DataFrame, tipo_grafico, servico: str, filtro_servico: str, dimensao: str) -> None:
+    fig = get_fig(df, tipo_grafico, servico, filtro_servico, dimensao)
+    st.plotly_chart(fig, use_container_width=False)
+
+
+@st.cache_data
+def get_fig(df, tipo_grafico, servico, filtro_servico, dimensao):
+    match tipo_grafico:
         case "Linha":
             fig = px.line(
                 df,
                 x="Ano",
                 y="Nível de acesso em %",
-                color="dimensão | serviço",
+                color=dimensao,
                 markers=True,
-                title=f"{service} por {dimension.lower()}"
+                title=f"{servico} {filtro_servico.lower()} por {dimensao.lower()}"
             )
+        case "Mapa":
+            if dimensao != "Município":
+                df[dimensao] = df[dimensao].str.upper()
+            geo_dict = {
+                "Sigla da Unidade da Federação": ["uf", "UF_05"],
+                "Mesorregião": ["mesorregiao", "MESO"],
+                "Microrregião": ["microrregiao", "MICRO"],
+                "Município": ["municipio", "NOME"]
+            }
+
+            with open(f"data/geo/{geo_dict[dimensao][0]}.json", encoding="latin1") as f:
+                geojson = json.load(f)
+
+            fig = px.choropleth_mapbox(
+                df,
+                geojson=geojson,
+                color="Nível de acesso em %",
+                locations=dimensao,
+                range_color=(0, 100),
+                mapbox_style="white-bg",
+                featureidkey=f"properties.{geo_dict[dimensao][1]}",
+                center={"lat": -14, "lon": -55},
+                animation_frame="Ano",
+                color_continuous_scale="Viridis",
+                zoom=3,
+                width=750,
+                height=750,
+                title=f"{servico} {filtro_servico.lower()} por {dimensao.lower()}"
+            )
+
         case _:
             fig = None
-    st.plotly_chart(fig, use_container_width=True)
+    return fig
 
 
-def download(df: pd.DataFrame, dimension: str) -> None:
+def download(df: pd.DataFrame, tipo_grafico, servico, filtro_servico, dimensao) -> None:
     csv = convert_df(df)
     st.download_button(
         label="Download CSV",
         data=csv,
-        file_name=f"quantidade de matriculas {dimension}.csv",
+        file_name=f"{servico} {filtro_servico.lower()} por {dimensao.lower()}.csv",
         mime="text/csv",
     )
 
 
 def main() -> None:
     st.markdown("# Censo escolar")
-    service = st.sidebar.selectbox(
+    tipo_grafico = st.sidebar.selectbox(
+        "Tipo de gráfico",
+        ["Linha", "Mapa"]
+    )
+    servico = st.sidebar.selectbox(
         "Serviço",
         [
             "Abastecimento de água",
@@ -184,24 +201,39 @@ def main() -> None:
             "Destinação do lixo",
             "Acesso a internet"]
     )
-    dimension = st.sidebar.selectbox(
+    match tipo_grafico:
+        case "Linha":
+            opcoes_dimensao = [
+                "Região Geográfica",
+                "Sigla da Unidade da Federação",
+                "Mesorregião",
+                "Microrregião",
+                "Município",
+                "Dependência Administrativa",
+                "Categoria de escola",
+                "Localização",
+                "Localização diferenciada da escola",
+            ]
+        case "Mapa":
+            opcoes_dimensao = ["Sigla da Unidade da Federação", "Mesorregião", "Microrregião", "Município"]
+
+    dimensao = st.sidebar.selectbox(
         "Dimensão",
-        [
-            "Região Geográfica",
-            "Unidade da Federação",
-            "Mesorregião",
-            "Microrregião",
-            "Município",
-            "Dependência Administrativa",
-            "Categoria de escola",
-            "Localização",
-            "Localização diferenciada da escola",
-        ]
+        opcoes_dimensao
     )
-    df = get_df(service, dimension)
-    df = get_df_filtred(df, service, dimension)
-    plot(df, service, dimension)
-    download(df, dimension)
+
+    df = get_df(servico, dimensao)
+    filtro_servico = st.sidebar.selectbox(
+        "Filtro serviço",
+        df["Serviço"].unique()
+    )
+    df = get_df_filtrado(df, filtro_servico)
+
+    flag_executar = st.button("Executar")
+
+    if flag_executar:
+        plot(df, tipo_grafico, servico, filtro_servico, dimensao)
+        download(df, tipo_grafico, servico, filtro_servico, dimensao)
 
 
 if __name__ == "__main__":

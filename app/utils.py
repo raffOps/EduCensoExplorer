@@ -1,14 +1,20 @@
+import json
+
 import duckdb
 import pandas as pd
 import streamlit as st
 from pyarrow import dataset as ds
 
-DIMENSIONS = {
-    "Ano": "NU_ANO_CENSO",
-    "Nome da região geográfica": "NO_REGIAO",
-    "Nome da Unidade da Federação": "NO_UF",
-    "Nome da Mesorregião": "NO_MESORREGIAO",
-    "Nome da Microrregião": "NO_MICRORREGIAO"
+DIMENSOES = {
+    "Dependência Administrativa": "TP_DEPENDENCIA",
+    "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
+    "Localização": "TP_LOCALIZACAO",
+    "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA",
+    "Região Geográfica": "NO_REGIAO",
+    "Sigla da Unidade da Federação": "SG_UF",
+    "Mesorregião": "NO_MESORREGIAO",
+    "Microrregião": "NO_MICRORREGIAO",
+    "Município": "NO_MUNICIPIO"
 }
 
 @st.cache_resource
@@ -18,6 +24,9 @@ def init_db_connection() -> duckdb.DuckDBPyConnection:
     con.register("microdados", microdados)
     return con
 
+def load_geojson(level: str) -> dict:
+    with open(f"data/geo/{level}.json", encoding="latin1") as f:
+        uf_json = json.load(f)
 
 @st.cache_data
 def run_query(query: str) -> pd.DataFrame:

@@ -69,7 +69,7 @@ def get_df_dimension(dimension: str) -> pd.DataFrame:
     return run_query(query)
 
 
-def get_df_filtred(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
+def get_df_filtrado(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
     filter = st.sidebar.multiselect(
         "Filtro",
         df[dimension].unique()
@@ -136,7 +136,7 @@ def main() -> None:
     else:
         df = get_df_dimension(dimension)
 
-    df = get_df_filtred(df, dimension)
+    df = get_df_filtrado(df, dimension)
     plot(df, dimension)
     download(df, dimension)
 

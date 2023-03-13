@@ -4,9 +4,10 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-from utils import DIMENSIONS, run_query, convert_df
+from utils import DIMENSOES, run_query, convert_df
 
 
+@st.cache_data
 def get_df_nivel_ensino() -> pd.DataFrame:
     query = """
                 select
@@ -41,102 +42,87 @@ def get_df_nivel_ensino() -> pd.DataFrame:
 
     return df
 
-
-def get_df_dimension(dimension: str) -> pd.DataFrame:
-    common_dimensions = {
-        "Dependência Administrativa": "TP_DEPENDENCIA",
-        "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
-        "Localização": "TP_LOCALIZACAO",
-        "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA",
-        "Nome da Região Geográfica": "NO_REGIAO",
-        "Nome da Unidade da Federação": "NO_UF",
-        "Nome da Mesorregião": "NO_MESORREGIAO",
-        "Nome da Microrregião": "NO_MICRORREGIAO",
-        "Nome do Município": "NO_MUNICIPIO"
-    }
-    column = common_dimensions[dimension]
+@st.cache_data
+def get_df_dimensao(dimensao: str) -> pd.DataFrame:
     query = f"""
                     select
                         NU_ANO_CENSO as 'Ano',
-                        {column} as '{dimension}',
+                        {DIMENSOES[dimensao]} as '{dimensao}',
                         cast(sum(QT_MAT_BAS) as bigint) as 'Quantidade de matrículas'
                     from microdados
-                    group by NU_ANO_CENSO, {column}
+                    group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
                     order by 1, 2
                 """
     return run_query(query)
 
-
-def get_df_filtred(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
-    filter = st.sidebar.multiselect(
-        "Filtro",
-        df[dimension].unique()
-    )
-    df = df[df[dimension].isin(filter)]
+@st.cache_data
+def get_df_filtrado(df: pd.DataFrame, dimensao: str, filtro: list[str]) -> pd.DataFrame:
+    df = df[df[dimensao].isin(filtro)]
     return df
 
 
-def plot(df: pd.DataFrame, dimension: str) -> None:
-    tipo_plot = st.sidebar.selectbox(
-        "Tipo de gráfico",
-        ["Linha", "Barra"]
-    )
-    match tipo_plot:
+def plot(df: pd.DataFrame, tipo_grafico: str, dimensao: str) -> None:
+    fig = get_fig(df, dimensao, tipo_grafico)
+    st.plotly_chart(fig, use_container_width=True)
+
+@st.cache_data
+def get_fig(df, dimensao, tipo_grafico):
+    match tipo_grafico:
         case "Barra":
             fig = px.bar(
                 df,
                 x='Ano',
                 y="Quantidade de matrículas",
-                color=dimension,
-                title=f"Quantidade de matrículas por {dimension.lower()}"
+                color=dimensao,
+                title=f"Quantidade de matrículas por {dimensao.lower()}"
             )
         case "Linha":
             fig = px.line(
                 df,
                 x='Ano',
                 y="Quantidade de matrículas",
-                color=dimension,
+                color=dimensao,
                 markers=True,
-                title=f"Quantidade de matrículas por {dimension.lower()}"
+                title=f"Quantidade de matrículas por {dimensao.lower()}"
             )
         case _:
             fig = None
-    st.plotly_chart(fig, use_container_width=True)
+    return fig
 
 
-def download(df: pd.DataFrame, dimension: str) -> None:
+def download(df: pd.DataFrame, dimensao: str) -> None:
     csv = convert_df(df)
     st.download_button(
         label="Download CSV",
         data=csv,
-        file_name=f"quantidade de matriculas {dimension}.csv",
+        file_name=f"quantidade de matriculas {dimensao.lower()}.csv",
         mime="text/csv",
     )
 
 
 def main() -> None:
     st.markdown("# Censo escolar")
-    dimension = st.sidebar.selectbox(
-        "Dimensão",
-        ["Nível de ensino",
-         "Dependência Administrativa",
-         "Categoria de escola",
-         "Localização",
-         "Localização diferenciada da escola"
-         "Nome da Região Geográfica",
-         "Nome da Unidade da Federação",
-         "Nome da Mesorregião",
-         "Nome da Microrregião",
-         "Nome do Município"]
+    tipo_grafico = st.sidebar.selectbox(
+        "Tipo de gráfico",
+        ["Linha", "Barra"]
     )
-    if dimension == "Nível de ensino":
+    dimensao = st.sidebar.selectbox(
+        "Dimensão",
+        DIMENSOES
+    )
+    if dimensao == "Nível de ensino":
         df = get_df_nivel_ensino()
     else:
-        df = get_df_dimension(dimension)
+        df = get_df_dimensao(dimensao)
 
-    df = get_df_filtred(df, dimension)
-    plot(df, dimension)
-    download(df, dimension)
+    filtro = st.sidebar.multiselect(
+        "Filtro dimensao",
+        df[dimensao].unique()
+    )
+
+    df = get_df_filtrado(df, dimensao, filtro)
+    plot(df, tipo_grafico, dimensao)
+    download(df, dimensao)
 
 
 if __name__ == "__main__":
