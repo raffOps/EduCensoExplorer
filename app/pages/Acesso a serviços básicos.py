@@ -13,11 +13,11 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
         "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
         "Localização": "TP_LOCALIZACAO",
         "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA",
-        "Nome da Região Geográfica": "NO_REGIAO",
-        "Nome da Unidade da Federação": "NO_UF",
-        "Nome da Mesorregião": "NO_MESORREGIAO",
-        "Nome da Microrregião": "NO_MICRORREGIAO",
-        "Nome do Município": "NO_MUNICIPIO"
+        "Região Geográfica": "NO_REGIAO",
+        "Unidade da Federação": "NO_UF",
+        "Mesorregião": "NO_MESORREGIAO",
+        "Microrregião": "NO_MICRORREGIAO",
+        "Município": "NO_MUNICIPIO"
     }
 
     match serivce:
@@ -41,6 +41,83 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
                 group by NU_ANO_CENSO, {dimensions[dimension]}
                 order by 1, 2
             """
+        case "Abastecimento de energia elétrica":
+            query = f"""
+                select
+                    NU_ANO_CENSO as 'Ano',
+                    {dimensions[dimension]} as '{dimension}',
+                    round(cast(count(*) filter (where IN_ENERGIA_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
+                    round(cast(count(*) filter (where IN_ENERGIA_GERADOR_FOSSIL) as float) / count(*), 3) as 'Gerador movido a combustível fóssil',
+                    round(cast(count(*) filter (where IN_ENERGIA_RENOVAVEL) as float) / count(*), 3) as 'Fontes de energia renováveis ou alternativas',
+                    round(cast(count(*) filter (where IN_ENERGIA_INEXISTENTE) as float) / count(*), 3) as 'Não há energia elétrica',
+                    round(
+                        cast(count(*) filter
+                            (where not (IN_ENERGIA_REDE_PUBLICA or IN_ENERGIA_GERADOR_FOSSIL or IN_ENERGIA_RENOVAVEL or IN_ENERGIA_INEXISTENTE))
+                            as float)
+                        / count(*)
+                    , 3) as 'Sem informações'
+                from microdados
+                group by NU_ANO_CENSO, {dimensions[dimension]}
+                order by 1, 2
+            """
+        case "Esgoto sanitário":
+            query = f"""
+                select
+                    NU_ANO_CENSO as 'Ano',
+                    {dimensions[dimension]} as '{dimension}',
+                    round(cast(count(*) filter (where IN_ESGOTO_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
+                    round(cast(count(*) filter (where IN_ESGOTO_FOSSA_SEPTICA) as float) / count(*), 3) as 'Fossa Séptica',
+                    round(cast(count(*) filter (where IN_ESGOTO_FOSSA_COMUM) as float) / count(*), 3) as 'Fossa rudimentar/comum',
+                    round(cast(count(*) filter (where IN_ESGOTO_FOSSA) as float) / count(*), 3) as 'Fossa',
+                    round(cast(count(*) filter (where IN_ESGOTO_INEXISTENTE) as float) / count(*), 3) as 'Não há esgotamento sanitário',
+                    round(
+                        cast(count(*) filter
+                            (where not (IN_ESGOTO_REDE_PUBLICA or IN_ESGOTO_FOSSA_SEPTICA or IN_ESGOTO_FOSSA_COMUM or IN_ESGOTO_FOSSA or IN_ESGOTO_INEXISTENTE ))
+                            as float)
+                        / count(*)
+                    , 3) as 'Sem informações'
+                from microdados
+                group by NU_ANO_CENSO, {dimensions[dimension]}
+                order by 1, 2
+            """
+        case "Destinação do lixo":
+            query = f"""
+                select
+                    NU_ANO_CENSO as 'Ano',
+                    {dimensions[dimension]} as '{dimension}',
+                    round(cast(count(*) filter (where IN_LIXO_SERVICO_COLETA) as float) / count(*), 3) as 'Servico de coleta',
+                    round(cast(count(*) filter (where IN_LIXO_QUEIMA) as float) / count(*), 3) as 'Queima',
+                    round(cast(count(*) filter (where IN_LIXO_ENTERRA) as float) / count(*), 3) as 'Enterra',
+                    round(
+                            cast(count(*) filter (where IN_LIXO_DESTINO_FINAL_PUBLICO) as float)
+                            / count(*),
+                        3)
+                        as 'Leva a uma destinação final financiada pelo poder público',
+                    round(
+                            cast(count(*) filter (where IN_LIXO_DESCARTA_OUTRA_AREA) as float)
+                            / count(*),
+                        3)
+                        as 'Destinação do lixo - Descarta em outra área',
+                    round(
+                        cast(count(*) filter
+                            (where not (IN_LIXO_SERVICO_COLETA or IN_LIXO_QUEIMA or IN_LIXO_ENTERRA or IN_LIXO_DESTINO_FINAL_PUBLICO or IN_LIXO_DESCARTA_OUTRA_AREA ))
+                            as float)
+                        / count(*)
+                    , 3) as 'Sem informações'
+                from microdados
+                group by NU_ANO_CENSO, {dimensions[dimension]}
+                order by 1, 2
+            """
+        case "Acesso a internet":
+            query = f"""
+                select
+                    NU_ANO_CENSO as 'Ano',
+                    {dimensions[dimension]} as '{dimension}',
+                    round(cast(count(*) filter (where IN_INTERNET) as float) / count(*), 3) as 'Acesso a internet',
+                from microdados
+                group by NU_ANO_CENSO, {dimensions[dimension]}
+                order by 1, 2
+            """
     df = run_query(query)
     df = df.melt(
         id_vars=df.columns[:2],
@@ -49,6 +126,7 @@ def get_df(serivce: str, dimension: str) -> pd.DataFrame:
         value_vars=df.columns[2:]
     )
     return df
+
 
 def get_df_filtred(df: pd.DataFrame, service: str, dimension: str) -> pd.DataFrame:
     filter_service = st.sidebar.multiselect(
@@ -63,7 +141,7 @@ def get_df_filtred(df: pd.DataFrame, service: str, dimension: str) -> pd.DataFra
     return df
 
 
-def plot(df: pd.DataFrame, dimension: str) -> None:
+def plot(df: pd.DataFrame, service, dimension: str) -> None:
     df["dimensão | serviço"] = df.iloc[:, 1] + " | " + df.iloc[:, 2]
     tipo_plot = st.sidebar.selectbox(
         "Tipo de gráfico",
@@ -77,7 +155,7 @@ def plot(df: pd.DataFrame, dimension: str) -> None:
                 y="Taxa de acesso",
                 color="dimensão | serviço",
                 markers=True,
-                title=f"Quantidade de matrículas por {dimension.lower()}"
+                title=f"{service} por {dimension.lower()}"
             )
         case _:
             fig = None
@@ -99,28 +177,29 @@ def main() -> None:
     service = st.sidebar.selectbox(
         "Serviço",
         [
-        "Abastecimento de água",
-        "Abastecimento de energia elétrica",
-        "Esgoto sanitário",
-        "Destinação do lixo",
-        "Acesso a internet"]
+            "Abastecimento de água",
+            "Abastecimento de energia elétrica",
+            "Esgoto sanitário",
+            "Destinação do lixo",
+            "Acesso a internet"]
     )
     dimension = st.sidebar.selectbox(
         "Dimensão",
         [
-         "Dependência Administrativa",
-         "Categoria de escola",
-         "Localização",
-         "Localização diferenciada da escola",
-         "Nome da Região Geográfica",
-         "Nome da Unidade da Federação",
-         "Nome da Mesorregião",
-         "Nome da Microrregião",
-         "Nome do Município"]
+            "Região Geográfica",
+            "Unidade da Federação",
+            "Mesorregião",
+            "Microrregião",
+            "Município",
+            "Dependência Administrativa",
+            "Categoria de escola",
+            "Localização",
+            "Localização diferenciada da escola",
+        ]
     )
     df = get_df(service, dimension)
     df = get_df_filtred(df, service, dimension)
-    plot(df, dimension)
+    plot(df, service, dimension)
     download(df, dimension)
 
 
