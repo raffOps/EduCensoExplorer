@@ -47,7 +47,12 @@ def get_df_dimension(dimension: str) -> pd.DataFrame:
         "Dependência Administrativa": "TP_DEPENDENCIA",
         "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
         "Localização": "TP_LOCALIZACAO",
-        "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA"
+        "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA",
+        "Nome da Região Geográfica": "NO_REGIAO",
+        "Nome da Unidade da Federação": "NO_UF",
+        "Nome da Mesorregião": "NO_MESORREGIAO",
+        "Nome da Microrregião": "NO_MICRORREGIAO",
+        "Nome do Município": "NO_MUNICIPIO"
     }
     column = common_dimensions[dimension]
     query = f"""
@@ -60,6 +65,7 @@ def get_df_dimension(dimension: str) -> pd.DataFrame:
                     order by 1, 2
                 """
     return run_query(query)
+
 
 def get_df_filtred(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
     filter = st.sidebar.multiselect(
@@ -107,6 +113,7 @@ def download(df: pd.DataFrame, dimension: str) -> None:
         mime="text/csv",
     )
 
+
 def main() -> None:
     st.markdown("# Censo escolar")
     dimension = st.sidebar.selectbox(
@@ -115,7 +122,12 @@ def main() -> None:
          "Dependência Administrativa",
          "Categoria de escola",
          "Localização",
-         "Localização diferenciada da escola"]
+         "Localização diferenciada da escola"
+         "Nome da Região Geográfica",
+         "Nome da Unidade da Federação",
+         "Nome da Mesorregião",
+         "Nome da Microrregião",
+         "Nome do Município"]
     )
     if dimension == "Nível de ensino":
         df = get_df_nivel_ensino()
