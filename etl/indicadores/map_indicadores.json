@@ -266,7 +266,7 @@
     "DSU_M02": "Ensino Médio - 2º Ano",
     "DSU_M03": "Ensino Médio - 3º Ano",
     "DSU_M04": "Ensino Médio - 4º Ano",
-    "DSU_PRF": "Educação Profissional",
+    "DSU_PRO": "Educação Profissional",
     "DSU_EJA": "Educação de Jovens e Adultos (EJA)",
     "DSU_ESP": "Educação Especial",
 
@@ -279,6 +279,17 @@
     "MED_CAT_0": "Ensino Médio",
     "PRO_CAT_0": "Educação Profissional",
     "EJA_CAT_0": "Educação de Jovens e Adultos (EJA)",
+    
+    "ED_INF_CAT0": "Educação Infantil",
+    "CRE_CAT0": "Educação Infantil Creche",
+    "PRE_CAT0": "Educação Infantil Pré-Escola",
+    "FUN_CAT0": "Ensino Fundamental",
+    "FUN_AI_CAT0": "Ensino Fundamental Anos iniciais",
+    "FUN_AF_CAT0": "Ensino Fundamental Anos finais",
+    "MED_CAT0": "Ensino Médio",
+    "PRO_CAT0": "Educação Profissional",
+    "EJA_CAT0": "Educação de Jovens e Adultos (EJA)",
+    
     "EDU_BAS_CAT": "Educação Especial"
   }
 }

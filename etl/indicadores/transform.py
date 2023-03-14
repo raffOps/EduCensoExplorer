@@ -11,7 +11,7 @@ logger = logging.getLogger(name="indicadores - transform")
 
 INDICADORES = {
     "AFD": "Adequação da Formação Docente",
-    "ICG": "Complexidade de Gestão da Escola",
+    #"ICG": "Complexidade de Gestão da Escola",
     "IED": "Esforço Docente",
     "ATU": "Média de Alunos por Turma",
     "HAD": "Média de Horas-aula diária",

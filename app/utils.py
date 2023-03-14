@@ -22,6 +22,12 @@ def init_db_connection() -> duckdb.DuckDBPyConnection:
     con = duckdb.connect()
     microdados = ds.dataset("data/transformed/microdados.parquet", format="parquet", partitioning="hive")
     con.register("microdados", microdados)
+
+    indicadores = {}
+    for indicador in INDICADORES.values():
+        indicadores[indicador] = ds.dataset(f"data/transformed/indicadores/{indicador}.parquet", format="parquet",
+                                            partitioning="hive")
+        con.register(indicador, indicadores[indicador])
     return con
 
 def load_geojson(level: str) -> dict:

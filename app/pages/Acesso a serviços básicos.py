@@ -181,7 +181,7 @@ def download(df: pd.DataFrame, tipo_grafico, servico, filtro_servico, dimensao) 
     st.download_button(
         label="Download CSV",
         data=csv,
-        file_name=f"{servico} {filtro_servico.lower()} por {dimensao.lower()}.csv",
+        file_name=f"{servico} {filtro_servico} por {dimensao}.csv".lower(),
         mime="text/csv",
     )
 
@@ -229,9 +229,7 @@ def main() -> None:
     )
     df = get_df_filtrado(df, filtro_servico)
 
-    flag_executar = st.button("Executar")
-
-    if flag_executar:
+    if flag_executar := st.sidebar.button("Executar"):
         plot(df, tipo_grafico, servico, filtro_servico, dimensao)
         download(df, tipo_grafico, servico, filtro_servico, dimensao)
 

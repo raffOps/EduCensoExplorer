@@ -4,6 +4,7 @@
 *.xlsx
 *.CSV
 *.pdf
+*.html
 /data/**/*.txt
 .idea
 *.db
