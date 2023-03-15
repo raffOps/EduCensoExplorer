@@ -1,9 +1,7 @@
-from typing import Any
-
 import pandas as pd
-import streamlit as st
 import plotly.express as px
-
+import plotly.graph_objs
+import streamlit as st
 from utils import DIMENSOES, run_query, convert_df
 
 
@@ -42,6 +40,7 @@ def get_df_nivel_ensino() -> pd.DataFrame:
 
     return df
 
+
 @st.cache_data
 def get_df_dimensao(dimensao: str) -> pd.DataFrame:
     query = f"""
@@ -55,9 +54,11 @@ def get_df_dimensao(dimensao: str) -> pd.DataFrame:
                 """
     return run_query(query)
 
+
 @st.cache_data
 def get_df_filtrado(df: pd.DataFrame, dimensao: str, filtro: list[str]) -> pd.DataFrame:
-    df = df[df[dimensao].isin(filtro)]
+    if filtro:
+        df = df[df[dimensao].isin(filtro)]
     return df
 
 
@@ -65,8 +66,9 @@ def plot(df: pd.DataFrame, tipo_grafico: str, dimensao: str) -> None:
     fig = get_fig(df, dimensao, tipo_grafico)
     st.plotly_chart(fig, use_container_width=True)
 
+
 @st.cache_data
-def get_fig(df, dimensao, tipo_grafico):
+def get_fig(df: pd.DataFrame, dimensao: str, tipo_grafico: str) -> plotly.graph_objs.Figure:
     match tipo_grafico:
         case "Barra":
             fig = px.bar(

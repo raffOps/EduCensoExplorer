@@ -1,0 +1,12 @@
+[flake8]
+max-line-length = 120
+extend-ignore = S608,E501
+exclude =
+    .tox,
+    __pycache__
+    *venv*
+    dbt/dbt_packages
+    soda/teste.py
+    build
+    dist
+    ./airflow/airflow_view_fix.py

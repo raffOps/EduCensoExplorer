@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def main() -> None:
     st.markdown("# Censo escolar")
 

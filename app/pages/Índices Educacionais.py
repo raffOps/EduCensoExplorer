@@ -1,18 +1,9 @@
 import json
+
 import pandas as pd
-import streamlit as st
 import plotly.express as px
-
-from utils import run_query, convert_df
-
-INDICADORES = {
-    "Adequação da Formação Docente": "AFD",
-    "Esforço Docente": "IED",
-    "Média de Alunos por Turma": "ATU",
-    "Média de Horas-aula diária": "HAD",
-    "Percentual de Docentes com Curso Superior": "DSU",
-    "Taxas de Distorção Idade-série": "TDI"
-}
+import streamlit as st
+from utils import INDICADORES, run_query, convert_df
 
 WIKI_INDICADORES = {
     "Adequação da Formação Docente": "Adequação da formação docente é um indicador da adequação da formação inicial dos "
@@ -25,7 +16,7 @@ WIKI_INDICADORES = {
                                      " - Grupo 3: Docentes com licenciatura em área diferente daquela que leciona, "
                                      "ou combacharelado nas disciplinas da base curricular comum e complementação "
                                      "pedagógica concluída em área diferente daquela que leciona.\n\n"
-                                     "- Grupo 4: Docentes com outra formação superior não considerada nas categorias anteriores.\n"
+                                     "- Grupo 4: Docentes com outra formação superior não considerada nas localizaçãos anteriores.\n"
                                      "- Grupo 5: Docentes que não possuem curso superior completo\n\n"
                                      "[Fonte](https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2014/docente_formacao_legal/nota_tecnica_indicador_docente_formacao_legal.pdf)",
 
@@ -45,7 +36,6 @@ WIKI_INDICADORES = {
         "[Fonte](https://www.sed.sc.gov.br/legislacoes-estadual-e-federal/censo-278/indicadores-disponibilizados-pelo-inep/distorcao-serie-idade/12280-nota-tecnica-distorcao-idade-serie/file)"
 }
 
-
 DIMENSOES_GEOGRAFICAS = {
     "Unidade da Federação": ["SG_UF", "uf", "UF_05"],
     "Município": ["NO_MUNICIPIO", "municipio", "NOME"]
@@ -60,7 +50,7 @@ def get_valores_possiveis(indicador: str, coluna: str) -> list[str]:
 
 def get_df_linha(
         indicador: str,
-        categoria: str,
+        localização: str,
         dependencia: str,
         label_dimensao_geografica: str,
         dimensao_geografica: str
@@ -72,7 +62,7 @@ def get_df_linha(
                     avg(METRICA) AS '{indicador}'
                 from {INDICADORES[indicador]} i
                 where
-                    NO_CATEGORIA='{categoria}'
+                    NO_CATEGORIA='{localização}'
                     and NO_DEPENDENCIA='{dependencia}'
                     and {DIMENSOES_GEOGRAFICAS[label_dimensao_geografica][0]}='{dimensao_geografica}'
                 group by NU_ANO_CENSO, TP_GRUPO
@@ -83,7 +73,7 @@ def get_df_linha(
 
 def get_df_mapa(
         indicador: str,
-        categoria: str,
+        localização: str,
         dependencia: str,
         dimensao_geografica: str,
         grupo: str
@@ -95,7 +85,7 @@ def get_df_mapa(
                     avg(METRICA) AS '{indicador}'
                 from {INDICADORES[indicador]} i
                 where
-                    NO_CATEGORIA='{categoria}'
+                    NO_CATEGORIA='{localização}'
                     and NO_DEPENDENCIA='{dependencia}'
                     and TP_GRUPO='{grupo}'
                 group by NU_ANO_CENSO, {DIMENSOES_GEOGRAFICAS[dimensao_geografica][0]}
@@ -127,7 +117,7 @@ def plot_linha(
 
 
 @st.cache_data
-def plot_mapa(df: str, indicador:str, label_dimensao_geografica, title: str):
+def plot_mapa(df: str, indicador: str, label_dimensao_geografica: str, title: str) -> None:
     with open(f"data/geo/{DIMENSOES_GEOGRAFICAS[label_dimensao_geografica][1]}.json", encoding="latin1") as f:
         geojson = json.load(f)
     fig = px.choropleth_mapbox(
@@ -160,31 +150,40 @@ def download(df: pd.DataFrame,
         mime="text/csv",
     )
 
-def linha(categoria: str, dependencia: str, indicador: str, label_dimensao_geografica: str):
-    grupo = st.sidebar.multiselect(
-        "Grupo",
-        get_valores_possiveis(indicador, "TP_GRUPO")
-    )
+
+def linha(localização: str, dependencia: str, indicador: str, label_dimensao_geografica: str) -> None:
     filtro_dimensao_geografica = st.sidebar.selectbox(
         "Filtro dimensão geográfica",
         get_valores_possiveis(indicador, DIMENSOES_GEOGRAFICAS[label_dimensao_geografica][0])
     )
-    df = get_df_linha(indicador, categoria, dependencia, label_dimensao_geografica,
+    grupo = st.sidebar.multiselect(
+        "Grupo",
+        get_valores_possiveis(indicador, "TP_GRUPO")
+    )
+    df = get_df_linha(indicador, localização, dependencia, label_dimensao_geografica,
                       filtro_dimensao_geografica)
     df = get_df_filtrado(df, "Grupo", grupo)
-    title = f"{indicador} | {filtro_dimensao_geografica} | {categoria} | {dependencia}"
+    title = f"{indicador} | {label_dimensao_geografica} - {filtro_dimensao_geografica} " \
+            f"| Localização {localização} | Dependência {dependencia}"
     plot_linha(df, indicador, title)
     download(df, title)
 
 
-def mapa(categoria: str, dependencia: str, indicador: str, label_dimensao_geografica: str):
+def mapa(
+        localização: str,
+        dependencia: str,
+        indicador: str,
+        label_dimensao_geografica: str
+) -> None:
     grupo = st.sidebar.selectbox(
         "Grupo",
         get_valores_possiveis(indicador, "TP_GRUPO")
     )
-    if flag_executar := st.button("Executar"):
-        df = get_df_mapa(indicador, categoria, dependencia, label_dimensao_geografica, grupo)
-        title = title = f"{indicador} | {grupo} | {categoria} | {dependencia}"
+
+    df = get_df_mapa(indicador, localização, dependencia, label_dimensao_geografica, grupo)
+    title = title = f"{indicador} | Grupo - {grupo} " \
+                    f"| Localização {localização} | Dependência {dependencia}"
+    if st.button("Executar"):
         plot_mapa(df, indicador, label_dimensao_geografica, title)
         download(df, title)
 
@@ -198,8 +197,8 @@ def main() -> None:
         "Indicador",
         INDICADORES.keys()
     )
-    categoria = st.sidebar.selectbox(
-        "Categoria",
+    localização = st.sidebar.selectbox(
+        "Localização",
         ["Rural", "Urbana"]
     )
     dependencia = st.sidebar.selectbox(
@@ -212,9 +211,9 @@ def main() -> None:
     )
 
     if tipo_grafico == "Linha":
-        linha(categoria, dependencia, indicador, label_dimensao_geografica)
+        linha(localização, dependencia, indicador, label_dimensao_geografica)
     else:
-        mapa(categoria, dependencia, indicador, label_dimensao_geografica)
+        mapa(localização, dependencia, indicador, label_dimensao_geografica)
 
     if INDICADORES[indicador] in ("AFD", "IED", "TDI"):
         st.markdown(f"{WIKI_INDICADORES[indicador]}")

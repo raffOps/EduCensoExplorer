@@ -1,21 +1,28 @@
-import json
-
 import duckdb
 import pandas as pd
 import streamlit as st
 from pyarrow import dataset as ds
+INDICADORES = {
+    "Adequação da Formação Docente": "AFD",
+    "Esforço Docente": "IED",
+    "Média de Alunos por Turma": "ATU",
+    "Média de Horas-aula diária": "HAD",
+    "Percentual de Docentes com Curso Superior": "DSU",
+    "Taxas de Distorção Idade-série": "TDI"
+}
+
 
 DIMENSOES = {
     "Dependência Administrativa": "TP_DEPENDENCIA",
     "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
     "Localização": "TP_LOCALIZACAO",
-    "Localização diferenciada da escola": "TP_LOCALIZACAO_DIFERENCIADA",
     "Região Geográfica": "NO_REGIAO",
-    "Sigla da Unidade da Federação": "SG_UF",
+    "Unidade da Federação": "SG_UF",
     "Mesorregião": "NO_MESORREGIAO",
     "Microrregião": "NO_MICRORREGIAO",
     "Município": "NO_MUNICIPIO"
 }
+
 
 @st.cache_resource
 def init_db_connection() -> duckdb.DuckDBPyConnection:
@@ -30,9 +37,6 @@ def init_db_connection() -> duckdb.DuckDBPyConnection:
         con.register(indicador, indicadores[indicador])
     return con
 
-def load_geojson(level: str) -> dict:
-    with open(f"data/geo/{level}.json", encoding="latin1") as f:
-        uf_json = json.load(f)
 
 @st.cache_data
 def run_query(query: str) -> pd.DataFrame:

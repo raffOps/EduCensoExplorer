@@ -5,3 +5,7 @@ pandas
 numpy
 duckdb
 pyarrow
+flake8-use-fstring
+flake8-bugbear
+flake8-bandit
+flake8-annotations
