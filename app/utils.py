@@ -11,17 +11,21 @@ INDICADORES = {
     "Taxas de Distorção Idade-série": "TDI"
 }
 
-
 DIMENSOES = {
     "Dependência Administrativa": "TP_DEPENDENCIA",
     "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
     "Localização": "TP_LOCALIZACAO",
+}
+
+DIMENSOES_GEOGRAFICAS = {
+    "País": "NO_PAIS",
     "Região Geográfica": "NO_REGIAO",
     "Unidade da Federação": "SG_UF",
     "Mesorregião": "NO_MESORREGIAO",
     "Microrregião": "NO_MICRORREGIAO",
     "Município": "NO_MUNICIPIO"
 }
+
 
 
 @st.cache_resource
@@ -41,6 +45,25 @@ def init_db_connection() -> duckdb.DuckDBPyConnection:
 @st.cache_data
 def run_query(query: str) -> pd.DataFrame:
     return con.execute(query).df()
+
+
+@st.cache_data
+def get_valores_possiveis(fonte: str, coluna: str) -> list[str]:
+    if fonte == "microdados":
+        query = f"select distinct({coluna}) as value from microdados order by 1"
+    else:
+        query = f"select distinct({coluna}) as value from {INDICADORES[fonte]} order by 1"
+
+    return run_query(query)["value"].tolist()
+
+
+@st.cache_data
+def get_df_filtrado(df: pd.DataFrame, dimensao: str, filtro: list[str]) -> pd.DataFrame:
+    if filtro:
+        if isinstance(filtro, str):
+            filtro = [filtro]
+        df = df[df[dimensao].isin(filtro)]
+    return df
 
 
 @st.cache_data

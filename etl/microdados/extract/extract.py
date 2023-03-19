@@ -1,18 +1,22 @@
+import logging
 import os
+import warnings
 from time import sleep
 from zipfile import ZipFile, BadZipfile
-import logging
 
-import requests
 import backoff
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("microdados - extract")
 
+warnings.filterwarnings("ignore")
+
 
 @backoff.on_exception(
     backoff.expo,
-    requests.exceptions.RequestException
+    requests.exceptions.RequestException,
+    max_tries=2
 )
 def make_request(url: str) -> None:
     os.makedirs("./data/raw/microdados/zips", exist_ok=True)
@@ -47,7 +51,12 @@ def unzip_file(year: int) -> None:
     logger.debug("Unzipping")
     with ZipFile(f"./data/raw/microdados/zips/{year}.zip", 'r') as zip:
         zip.extractall("data/raw/microdados")
-
+        csv_file = [file for file in zip.namelist() if ".csv" in file.lower()]
+        zip.extractall("data/raw/microdados", members=csv_file)
+        os.rename(
+            f"./data/raw/microdados/{csv_file[0]}",
+            f"./data/raw/microdados/{year}.csv"
+        )
     logger.debug("Unzip complete")
 
 

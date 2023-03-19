@@ -1,67 +1,66 @@
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objs
 import streamlit as st
-from utils import DIMENSOES, run_query, convert_df
+from utils import DIMENSOES, DIMENSOES_GEOGRAFICAS, run_query, convert_df, get_valores_possiveis, get_df_filtrado
 
 
 @st.cache_data
-def get_df_dimensao(dimensao: str) -> pd.DataFrame:
+def get_df(
+        label_dimensao_geografica: str,
+        filtro_dimensao_geografica: str,
+        label_dimensao: str
+) -> pd.DataFrame:
     query = f"""
                     select
                         NU_ANO_CENSO as 'Ano',
-                        {DIMENSOES[dimensao]} as '{dimensao}',
-                        cast(count(*) as bigint) as 'Quantidade de escolas'
+                        {DIMENSOES[label_dimensao]} as '{label_dimensao}',
+                        cast(count(distinct(CO_ENTIDADE)) as bigint) as 'Quantidade de escolas'
                     from microdados
-                    group by NU_ANO_CENSO, {DIMENSOES[dimensao]}
-                    order by 1, 2
+                    where 
+                        {DIMENSOES_GEOGRAFICAS[label_dimensao_geografica]}='{filtro_dimensao_geografica}'
+                        and TP_SITUACAO_FUNCIONAMENTO='Em Atividade'
+                        and (
+                            QT_MAT_INF > 0 
+                            or QT_MAT_FUND > 0 
+                            or QT_MAT_MED > 0 
+                            or QT_MAT_EJA > 0
+                        )
+                    group by NU_ANO_CENSO, {DIMENSOES[label_dimensao]}
+                    order by 1
                 """
     return run_query(query)
 
 
-@st.cache_data
-def get_df_filtrado(df: pd.DataFrame, dimensao: str, filtro: list[str]) -> pd.DataFrame:
-    if filtro:
-        df = df[df[dimensao].isin(filtro)]
-    return df
-
-
-def plot(df: pd.DataFrame, tipo_grafico: str, dimensao: str) -> None:
-    fig = get_fig(df, dimensao, tipo_grafico)
-    st.plotly_chart(fig, use_container_width=True)
-
-
-@st.cache_data
-def get_fig(df: pd.DataFrame, dimensao: str, tipo_grafico: str) -> plotly.graph_objs.Figure:
+def plot(df: pd.DataFrame, tipo_grafico: str, label_dimensao: str, title: str) -> None:
     match tipo_grafico:
         case "Barra":
             fig = px.bar(
                 df,
-                x='Ano',
+                x="Ano",
                 y="Quantidade de escolas",
-                color=dimensao,
-                title=f"Quantidade de escolas por {dimensao.lower()}"
+                color=label_dimensao,
+                title=title
             )
         case "Linha":
             fig = px.line(
                 df,
-                x='Ano',
+                x="Ano",
                 y="Quantidade de escolas",
-                color=dimensao,
+                color=label_dimensao,
                 markers=True,
-                title=f"Quantidade de escolas por {dimensao.lower()}"
+                title=title
             )
         case _:
             fig = None
-    return fig
+    st.plotly_chart(fig, use_container_width=True)
 
 
-def download(df: pd.DataFrame, dimensao: str) -> None:
+def download(df: pd.DataFrame, title: str) -> None:
     csv = convert_df(df)
     st.download_button(
         label="Download CSV",
         data=csv,
-        file_name=f"quantidade de escolas {dimensao.lower()}.csv",
+        file_name=f"{title}.csv".lower(),
         mime="text/csv",
     )
 
@@ -72,20 +71,33 @@ def main() -> None:
         "Tipo de gráfico",
         ["Linha", "Barra"]
     )
-    dimensao = st.sidebar.selectbox(
+    label_dimensao_geografica = st.sidebar.selectbox(
+        "Dimensão geográfica",
+        DIMENSOES_GEOGRAFICAS.keys()
+    )
+
+    filtro_dimensao_geografica = st.sidebar.selectbox(
+        f"Filtro {label_dimensao_geografica}",
+        get_valores_possiveis("microdados", DIMENSOES_GEOGRAFICAS[label_dimensao_geografica])
+    )
+
+    label_dimensao = st.sidebar.selectbox(
         "Dimensão",
-        DIMENSOES
+        DIMENSOES.keys()
     )
 
-    df = get_df_dimensao(dimensao)
+    df = get_df(label_dimensao_geografica, filtro_dimensao_geografica, label_dimensao)
 
-    filtro = st.sidebar.multiselect(
-        "Filtro dimensão",
-        df[dimensao].unique()
+    filtro_dimensao = st.sidebar.multiselect(
+        f"Filtro {label_dimensao}",
+        get_valores_possiveis("microdados", DIMENSOES[label_dimensao])
     )
-    df = get_df_filtrado(df, dimensao, filtro)
-    plot(df, tipo_grafico, dimensao)
-    download(df, dimensao)
+
+    df = get_df_filtrado(df, label_dimensao, filtro_dimensao)
+    title = f"Quantidade de escolas por {label_dimensao} | " \
+            f"{label_dimensao_geografica} - {filtro_dimensao_geografica}"
+    plot(df, tipo_grafico, label_dimensao, title)
+    download(df, title)
 
 
 if __name__ == "__main__":

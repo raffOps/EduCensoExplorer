@@ -1,7 +1,7 @@
-from datetime import datetime
 import json
 import logging
 import os
+from datetime import datetime
 from shutil import rmtree
 
 import pandas as pd
@@ -11,23 +11,12 @@ logger = logging.getLogger(name="microdados - transform")
 
 
 def load_dataframe(year: int) -> pd.DataFrame:
-    patterns_filename = [
-        f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.csv",
-        f"./data/raw/microdados/microdados_ed_basica_{year}/dados/microdados_ed_basica_{year}.CSV",
-        f"./data/raw/microdados/Microdados do Censo Escolar da Educaç╞o Básica {year}/dados/microdados_ed_basica_{year}.csv",
-    ]
-    for pattern_filename in patterns_filename:
-        try:
-            return pd.read_csv(
-                pattern_filename,
-                delimiter=";",
-                encoding="latin1",
-                low_memory=False
-            )
-        except FileNotFoundError as e:
-            logger.error(e)
-
-    raise FileNotFoundError(patterns_filename)
+    return pd.read_csv(
+        f"./data/raw/microdados/{year}.csv",
+        delimiter=";",
+        encoding="latin1",
+        low_memory=False
+    )
 
 
 def transform_date_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -87,7 +76,7 @@ def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
         else:
             print(f"{column} not mapped")
     df[categorical_columns] = df[categorical_columns].replace(["-1", "9"], None)
-    df["TP_CATEGORIA_ESCOLA_PRIVADA"] = df["TP_CATEGORIA_ESCOLA_PRIVADA"].\
+    df["TP_CATEGORIA_ESCOLA_PRIVADA"] = df["TP_CATEGORIA_ESCOLA_PRIVADA"]. \
         replace(to_replace=["0", None], value="Pública")
     return df
 
@@ -101,6 +90,11 @@ def transform_identifier_columns(df: pd.DataFrame) -> pd.DataFrame:
 
     identifier_columns_int = ["CO_MUNICIPIO", "CO_ENTIDADE"]
     df[identifier_columns_int] = df[identifier_columns_int].astype("int64")
+    return df
+
+
+def create_new_columns(df: pd.DataFrame) -> pd.DataFrame:
+    df["NO_PAIS"] = "Brasil"
     return df
 
 
@@ -127,8 +121,8 @@ def main():
         df = transform_categorical_columns(df)
         df = transform_date_columns(df)
         df = transform_boolean_columns(df)
+        df = create_new_columns(df)
         save_dataframe(df)
-        logger.info(f"{year} finished")
 
 
 if __name__ == "__main__":

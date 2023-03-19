@@ -290,6 +290,12 @@
     "PRO_CAT0": "Educação Profissional",
     "EJA_CAT0": "Educação de Jovens e Adultos (EJA)",
     
-    "EDU_BAS_CAT": "Educação Especial"
+    "EDU_BAS_CAT": "Educação Especial",
+    "DSU_PROF":  "Educação Profissional",
+    "PROF_CAT0":  "Educação Profissional",
+    "PROF_CAT_0":  "Educação Profissional",
+    "EDU_BAS_CAT0": "Ensino Básico",
+    "EDU_BAS_CAT_0": "Ensino Básico",
+    "ED_BAS_CAT0": "Ensino Básico"
   }
 }
