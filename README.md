@@ -10,7 +10,7 @@ ETL e visualização do Censo escolar. [Link para o data app no Streamlit Commun
 - Instale as dependências:
 ```pip install -r requirements.txt```
 
-## Extracação e Transformação
+## Extração e Transformação
 
 Os scripts devem ser executados a partir do caminho raiz do repositório usando
 o ambiente virtual criado acima.
