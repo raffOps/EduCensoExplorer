@@ -174,7 +174,6 @@ def plot_mapa(df: pd.DataFrame, dimensao: str, title: str) -> None:
         geojson=geojson,
         color="Nível de acesso em %",
         locations=dimensao,
-        range_color=(0, 100),
         mapbox_style="white-bg",
         featureidkey=f"properties.{geo_dict[dimensao][1]}",
         center={"lat": -14, "lon": -55},
@@ -280,7 +279,7 @@ def main() -> None:
         [
             "Dependência Administrativa",
             "Categoria de escola",
-            "Localização",
+            "Localidade",
         ]
     )
     filtro_dimensao = st.sidebar.selectbox(

@@ -16,13 +16,13 @@ def get_df(
                         {DIMENSOES[label_dimensao]} as '{label_dimensao}',
                         cast(count(distinct(CO_ENTIDADE)) as bigint) as 'Quantidade de escolas'
                     from microdados
-                    where 
+                    where
                         {DIMENSOES_GEOGRAFICAS[label_dimensao_geografica]}='{filtro_dimensao_geografica}'
                         and TP_SITUACAO_FUNCIONAMENTO='Em Atividade'
                         and (
-                            QT_MAT_INF > 0 
-                            or QT_MAT_FUND > 0 
-                            or QT_MAT_MED > 0 
+                            QT_MAT_INF > 0
+                            or QT_MAT_FUND > 0
+                            or QT_MAT_MED > 0
                             or QT_MAT_EJA > 0
                         )
                     group by NU_ANO_CENSO, {DIMENSOES[label_dimensao]}

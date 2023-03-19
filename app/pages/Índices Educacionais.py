@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from utils import DIMENSOES_GEOGRAFICAS, DIMENSOES, INDICADORES, run_query, convert_df, get_valores_possiveis
+from utils import DIMENSOES_GEOGRAFICAS, INDICADORES, run_query, convert_df, get_valores_possiveis
 
 WIKI_INDICADORES = {
     "Adequação da Formação Docente": "Adequação da formação docente é um indicador da adequação da formação inicial dos "
@@ -20,8 +20,8 @@ WIKI_INDICADORES = {
                                      "- Grupo 5: Docentes que não possuem curso superior completo\n\n"
                                      "[Fonte](https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2014/docente_formacao_legal/nota_tecnica_indicador_docente_formacao_legal.pdf)",
 
-    "Esforço Docente":
-        "Esforço docente mensura o esforço empreendido pelos docentes da educação básica brasileira no exercício de sua profissão.\n"
+    "Índice de Esforço Docente":
+        "Índice de Esforço Docente mensura o esforço empreendido pelos docentes da educação básica brasileira no exercício de sua profissão.\n"
         "- Nível 1: Docente que tem até 25 alunos e atua em um único turno, escola e etapa.\n\n"
         "- Nível 2: Docente que tem entre 25 e 150 alunos e atua em um único turno, escola e etapa.\n\n"
         "- Nível 3: Docente que tem entre 25 e 300 alunos e atua em um ou dois turnos em uma única escola e etapa.\n\n"
@@ -39,29 +39,28 @@ WIKI_INDICADORES = {
 
 def get_df(
         indicador: str,
-        localização: str,
+        Localidade: str,
         dependencia: str,
         coluna_agregadora: str,
         label_coluna_agregadora: str,
         filtro: str,
         valor_filtro: str,
 ) -> pd.DataFrame:
-    if localização == "Total":
+    if Localidade == "Total":
         string_filtro_localizacao = ""
     else:
-        string_filtro_localizacao = f"and NO_CATEGORIA = '{localização}'"
+        string_filtro_localizacao = f"and NO_CATEGORIA = '{Localidade}'"
 
     if dependencia == "Total":
         string_filtro_dependencia = ""
     else:
         string_filtro_dependencia = f"and NO_DEPENDENCIA='{dependencia}'"
 
-
     query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
                     {coluna_agregadora} as '{label_coluna_agregadora}',
-                    avg(METRICA) AS '{indicador}'
+                    round(avg(METRICA), 2) AS '{indicador}'
                 from {INDICADORES[indicador]} i
                 where
                     {filtro}='{valor_filtro}'
@@ -98,7 +97,6 @@ def plot_linha(
 
 @st.cache_data
 def plot_mapa(df: str, indicador: str, label_dimensao_geografica: str, title: str) -> None:
-
     geo_dict = {
         "Unidade da Federação": ["uf", "UF_05"],
         "Município": ["municipio", "NOME"]
@@ -112,7 +110,6 @@ def plot_mapa(df: str, indicador: str, label_dimensao_geografica: str, title: st
         geojson=geojson,
         color=indicador,
         locations=label_dimensao_geografica,
-        range_color=(0, 100),
         mapbox_style="white-bg",
         featureidkey=f"properties.{geo_dict[label_dimensao_geografica][1]}",
         center={"lat": -14, "lon": -55},
@@ -138,14 +135,14 @@ def download(df: pd.DataFrame,
     )
 
 
-def linha(localização: str, dependencia: str, indicador: str, label_dimensao_geografica: str) -> None:
+def linha(Localidade: str, dependencia: str, indicador: str, label_dimensao_geografica: str) -> None:
     filtro_dimensao_geografica = st.sidebar.selectbox(
         "Filtro dimensão geográfica",
         get_valores_possiveis(indicador, DIMENSOES_GEOGRAFICAS[label_dimensao_geografica])
     )
     df = get_df(
         indicador,
-        localização,
+        Localidade,
         dependencia,
         coluna_agregadora="TP_GRUPO",
         label_coluna_agregadora="Grupo",
@@ -158,13 +155,13 @@ def linha(localização: str, dependencia: str, indicador: str, label_dimensao_g
     )
     df = get_df_filtrado(df, "Grupo", grupo)
     title = f"{indicador} | {label_dimensao_geografica} - {filtro_dimensao_geografica} " \
-            f"| Localização {localização} | Dependência {dependencia}"
+            f"| Localidade {Localidade} | Dependência {dependencia}"
     plot_linha(df, indicador, title)
     download(df, title)
 
 
 def mapa(
-        localização: str,
+        Localidade: str,
         dependencia: str,
         indicador: str,
         label_dimensao_geografica: str
@@ -176,7 +173,7 @@ def mapa(
 
     df = get_df(
         indicador,
-        localização,
+        Localidade,
         dependencia,
         coluna_agregadora=DIMENSOES_GEOGRAFICAS[label_dimensao_geografica],
         label_coluna_agregadora=label_dimensao_geografica,
@@ -184,7 +181,7 @@ def mapa(
         valor_filtro=grupo
     )
     title = title = f"{indicador} | Grupo - {grupo} " \
-                    f"| Localização {localização} | Dependência {dependencia}"
+                    f"| Localidade {Localidade} | Dependência {dependencia}"
     if st.button("Executar"):
         plot_mapa(df, indicador, label_dimensao_geografica, title)
         download(df, title)
@@ -211,20 +208,18 @@ def main() -> None:
             ["País", "Unidade da Federação", "Município"]
         )
 
-
-    localização = st.sidebar.selectbox(
-        "Localização",
+    Localidade = st.sidebar.selectbox(
+        "Localidade",
         ["Total", "Rural", "Urbana"]
     )
     dependencia = st.sidebar.selectbox(
         "Dependência",
-        ["Total",  "Estadual", "Municipal", "Privada", "Federal"]
+        ["Total", "Estadual", "Municipal", "Privada", "Federal"]
     )
-    
     if tipo_grafico == "Linha":
-        linha(localização, dependencia, indicador, label_dimensao_geografica)
+        linha(Localidade, dependencia, indicador, label_dimensao_geografica)
     else:
-        mapa(localização, dependencia, indicador, label_dimensao_geografica)
+        mapa(Localidade, dependencia, indicador, label_dimensao_geografica)
 
     if INDICADORES[indicador] in ("AFD", "IED", "TDI"):
         st.markdown(f"{WIKI_INDICADORES[indicador]}")

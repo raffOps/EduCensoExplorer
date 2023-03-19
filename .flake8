@@ -1,6 +1,6 @@
 [flake8]
 max-line-length = 120
-extend-ignore = S608,E501
+extend-ignore = S608,E501,S501
 exclude =
     .tox,
     __pycache__

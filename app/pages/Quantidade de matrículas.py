@@ -1,6 +1,5 @@
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objs
 import streamlit as st
 from utils import DIMENSOES, DIMENSOES_GEOGRAFICAS, run_query, convert_df, get_valores_possiveis, get_df_filtrado
 
@@ -37,7 +36,7 @@ def get_df(
                     cast(sum(QT_MAT_ESP_CE) as bigint) as 'Educação Especial Exclusiva',
                     cast(sum(QT_MAT_ESP) as bigint) as 'Educação Especial'
                 from microdados
-                where 
+                where
                     {DIMENSOES_GEOGRAFICAS[label_dimensao_geografica]}='{filtro_dimensao_geografica}'
                     {string_filtro_dimensao}
                 group by NU_ANO_CENSO

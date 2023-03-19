@@ -2,19 +2,22 @@ import duckdb
 import pandas as pd
 import streamlit as st
 from pyarrow import dataset as ds
+
 INDICADORES = {
     "Adequação da Formação Docente": "AFD",
-    "Esforço Docente": "IED",
-    "Média de Alunos por Turma": "ATU",
-    "Média de Horas-aula diária": "HAD",
     "Percentual de Docentes com Curso Superior": "DSU",
-    "Taxas de Distorção Idade-série": "TDI"
+    "Índice de Esforço Docente": "IED",
+    "Média de Alunos por Turma": "ATU",
+    "Média de Horas-aula Diária": "HAD",
+    "Taxas de Distorção Idade-série": "TDI",
+    "Taxa de Aprovação": "TAP",  # TRE
+    "Taxa de Reprovação": "TRP",  # TRE
+    "Taxa de Abandono": "TAB"  # TRE
 }
 
 DIMENSOES = {
     "Dependência Administrativa": "TP_DEPENDENCIA",
-    "Categoria de escola": "TP_CATEGORIA_ESCOLA_PRIVADA",
-    "Localização": "TP_LOCALIZACAO",
+    "Localidade": "TP_LOCALIZACAO",
 }
 
 DIMENSOES_GEOGRAFICAS = {
@@ -25,7 +28,6 @@ DIMENSOES_GEOGRAFICAS = {
     "Microrregião": "NO_MICRORREGIAO",
     "Município": "NO_MUNICIPIO"
 }
-
 
 
 @st.cache_resource

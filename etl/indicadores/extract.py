@@ -38,7 +38,7 @@ def get_url(indicador: str, year: int) -> str:
 def make_request(year: int, indicador: str) -> None:
     url = get_url(indicador, year)
     os.makedirs(f"./data/raw/{indicador}/zips", exist_ok=True)
-    with requests.get(url, stream=True, verify=False) as r:
+    with requests.get(url, stream=True, verify=False, timeout=600) as r:
         r.raise_for_status()
         with open(f"./data/raw/{indicador}/zips/{year}.zip", "wb") as f:
             for chunk in r.iter_content(chunk_size=8192):
@@ -56,7 +56,7 @@ def download_file(year: int, indicador: str) -> None:
         test_zip(year, indicador)
 
     #  pode acontecer do zip não ser baixado corretamente
-    except (requests.exceptions.ChunkedEncodingError, BadZipfile) as e:
+    except (requests.exceptions.ChunkedEncodingError, BadZipfile):
         sleep(100)
         if f"./data/raw/{indicador}/zips/{year}.zip" in os.listdir():
             os.remove(f"./data/raw/{indicador}/zips/{year}.zip")

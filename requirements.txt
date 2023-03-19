@@ -1,10 +1,16 @@
-streamlit
-seaborn
-plotly
+# etl
+requests
+backoff
 pandas
-numpy
-duckdb
 pyarrow
+openpyxl
+duckdb
+
+# app
+streamlit
+plotly
+
+# lint
 flake8-use-fstring
 flake8-bugbear
 flake8-bandit

@@ -15,20 +15,36 @@ INDICADORES = {
     "HAD": "Média de Horas-aula diária",
     "DSU": "Percentual de Docentes com Curso Superior",
     "TDI": "Taxas de Distorção Idade-série",
-    "TRE": "Taxa de Rendimento Escolar"
+    "TAP": "Taxa de Aprovação",  # TRE
+    "TRP": "Taxa de Reprovação",  # TRE
+    "TAB": "Taxa de Abandono",  # TRE
 }
+
 
 with open("./etl/indicadores/map_indicadores.json") as f:
     MAP_INDICADORES = json.load(f)
 
 
-def load_dataframe(indicador, year):
-    file = f"./data/raw/{indicador}/{year}.xlsx"
+def load_dataframe(indicador: str, year: int) -> None:
+    if indicador in {"TAP", "TRP", "TAB"}:
+        file = f"./data/raw/TRE/{year}.xlsx"
+    else:
+        file = f"./data/raw/{indicador}/{year}.xlsx"
     if not os.path.isfile(file):
         raise FileNotFoundError(file)
     match indicador:
         case "ATU" | "HAD" | "TDI":
             df = pd.read_excel(file, skiprows=8, skipfooter=6, na_values=["--"])
+        case "TAP" | "TRP" | "TAB":
+            df = pd.read_excel(file, skiprows=8, skipfooter=6, na_values=["--"])
+            match indicador:
+                case "TAP":
+                    df = df.iloc[:, :27]
+                case "TRP":
+                    df = pd.concat([df.iloc[:, :9], df.iloc[:, 27:45]], axis=1)
+                case "TAB":
+                    df = pd.concat([df.iloc[:, :9], df.iloc[:, 45:63]], axis=1)
+
         case "DSU":
             df = pd.read_excel(file, skiprows=9, skipfooter=6, na_values=["--"])
         case _:
@@ -50,8 +66,8 @@ def get_renamed_and_news_columns(df: pd.DataFrame, indicador: str) -> pd.DataFra
     df = df.rename(
         columns=dict(zip(df.columns[:9], columns))
     )
-    if indicador != "ICG":
-        df = df.rename(columns=MAP_INDICADORES[indicador])
+
+    df = df.rename(columns=MAP_INDICADORES[indicador])
 
     # deleted columns
     df = df.drop(columns=["NO_ENTIDADE"])
@@ -74,12 +90,10 @@ def get_melted_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 def get_dataframe_with_forced_schema(df: pd.DataFrame, indicador: str) -> pd.DataFrame:
     df[["CO_MUNICIPIO", "CO_ENTIDADE"]] = df[["CO_MUNICIPIO", "CO_ENTIDADE"]].astype("int64")
     df["NU_ANO_CENSO"] = df["NU_ANO_CENSO"].astype("int32")
-    if indicador != "ICG":
-        df["METRICA"] = df["METRICA"].astype("float")
     return df
 
 
-def save_dataframe(df: pd.DataFrame, indicador) -> None:
+def save_dataframe(df: pd.DataFrame, indicador: str) -> None:
     folder = f"./data/transformed/indicadores/{indicador}.parquet"
     df.to_parquet(
         folder,
@@ -90,7 +104,7 @@ def save_dataframe(df: pd.DataFrame, indicador) -> None:
     )
 
 
-def main():
+def main() -> None:
     for indicador in INDICADORES:
         folder = f"./data/transformed/indicadores/{indicador}.parquet"
         if os.path.exists(folder):
@@ -101,6 +115,7 @@ def main():
             try:
                 df = load_dataframe(indicador, year)
             except FileNotFoundError:  # TRE 2022
+                logger.error(f"{indicador} - {year} failed")
                 continue
             df = transform_dataframe(df, indicador)
             save_dataframe(df, indicador)
