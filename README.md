@@ -1,6 +1,6 @@
-# tcc_censo_escolar
+# EduCensoExplorer
 
-ETL e visualização do Censo escolar. [Link para o data app no Streamlit Community Cloud](https://censo-escolar.streamlit.app/)
+ETL e visualização do Censo escolar. [Link para o data app no Streamlit Community Cloud](https://educensoexplorer.streamlit.app/)
 
 ## Setup
 

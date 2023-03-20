@@ -4,9 +4,9 @@ import streamlit as st
 def main() -> None:
     st.markdown(
 """
-# Censo escolar
+# EduCensoExplorer
 Apresenta graficamente informações sobre os microdados e indicadores educacionais do 
-Censo Escolar no período de 2016 até 2022. Para executar o projeto localmente, leia o [README](https://github.com/rjribeiro/tcc_censo_escolar#readme).
+Censo Escolar no período de 2016 até 2022. Para executar o projeto localmente, leia o [README](https://github.com/rjribeiro/EduCensoExplorer#readme).
 
 ### Métricas 
 - Acesso a serviços básicos
