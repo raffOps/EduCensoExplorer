@@ -3,7 +3,7 @@ requests
 backoff
 pandas
 pyarrow
-openpyxl
+openpyxl==3.1.0 # https://stackoverflow.com/questions/75471318/readonlyworksheet-object-has-no-attribute-defined-names
 duckdb
 
 # app

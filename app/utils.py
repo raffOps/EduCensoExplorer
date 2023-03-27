@@ -23,7 +23,7 @@ DIMENSOES = {
 DIMENSOES_GEOGRAFICAS = {
     "País": "NO_PAIS",
     "Região Geográfica": "NO_REGIAO",
-    "Unidade da Federação": "SG_UF",
+    "Unidade da Federação": "NO_UF",
     "Mesorregião": "NO_MESORREGIAO",
     "Microrregião": "NO_MICRORREGIAO",
     "Município": "NO_MUNICIPIO"
@@ -70,6 +70,7 @@ def get_df_filtrado(df: pd.DataFrame, dimensao: str, filtro: list[str]) -> pd.Da
 
 @st.cache_data
 def convert_df(df: pd.DataFrame) -> bytes:
+    df = df.drop(columns=["dummy"], errors="ignore")
     return df.to_csv().encode('utf-8')
 
 

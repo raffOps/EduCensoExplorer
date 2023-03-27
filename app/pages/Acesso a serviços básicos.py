@@ -11,20 +11,35 @@ def get_df(
         servico: str,
         dimensao_geografica: str,
         label_dimensao_geografica: str,
-        dimensao: str,
-        label_dimensao: str,
-        filtro_dimensao: str
+        filtro_localidade: str,
+        filtro_dependencia: str
 ) -> pd.DataFrame:
-    if filtro_dimensao == "Total":
-        string_filtro_dimensao = ""
+    if filtro_localidade == "Total":
+        string_filtro_localidade = "1"
     else:
-        string_filtro_dimensao = f"where {dimensao}='{filtro_dimensao}'"
+        string_filtro_localidade = f"TP_LOCALIZACAO='{filtro_localidade}'"
+
+    if filtro_dependencia == "Total":
+        string_filtro_dependencia = "1"
+    else:
+        string_filtro_dependencia = f"TP_DEPENDENCIA='{filtro_dependencia}'"
+
+    if dimensao_geografica in {"NO_UF", "NO_MESORREGIAO", "NO_MICRORREGIAO", "NO_MUNICIPIO"}:
+        codigo_dimensao_geografica = dimensao_geografica.replace("NO", "CO")
+        label_cod_dimensao_geo = f"Código {label_dimensao_geografica}"
+        string_cod_dimensao_geo = f"{codigo_dimensao_geografica} as '{label_cod_dimensao_geo}'"
+        groupby_cod_dimensao = ", 3"
+    else:
+        string_cod_dimensao_geo = "0 as dummy"
+        groupby_cod_dimensao = ""
+
     match servico:
         case "Abastecimento de água":
             query = f"""
                 select
                     NU_ANO_CENSO as 'Ano',
                     {dimensao_geografica} as '{label_dimensao_geografica}',
+                    {string_cod_dimensao_geo},
                     round(cast(count(*) filter (where IN_AGUA_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
                     round(cast(count(*) filter (where IN_AGUA_POCO_ARTESIANO) as float) / count(*), 3) as 'Poço artesiano',
                     round(cast(count(*) filter (where IN_AGUA_CACIMBA) as float) / count(*), 3) as 'Cacimba/Cisterna/Poço',
@@ -37,8 +52,8 @@ def get_df(
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                {string_filtro_dimensao}
-                group by NU_ANO_CENSO, {dimensao_geografica}
+                where {string_filtro_dependencia} and {string_filtro_localidade}
+                group by 1, 2 {groupby_cod_dimensao}
                 order by 1
             """
         case "Abastecimento de energia elétrica":
@@ -46,6 +61,7 @@ def get_df(
                 select
                     NU_ANO_CENSO as 'Ano',
                     {dimensao_geografica} as '{label_dimensao_geografica}',
+                    {string_cod_dimensao_geo},
                     round(cast(count(*) filter (where IN_ENERGIA_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
                     round(cast(count(*) filter (where IN_ENERGIA_GERADOR_FOSSIL) as float) / count(*), 3) as 'Gerador movido a combustível fóssil',
                     round(cast(count(*) filter (where IN_ENERGIA_RENOVAVEL) as float) / count(*), 3) as 'Fontes de energia renováveis ou alternativas',
@@ -57,8 +73,8 @@ def get_df(
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                {string_filtro_dimensao}
-                group by NU_ANO_CENSO, {dimensao_geografica}
+                where {string_filtro_dependencia} and {string_filtro_localidade}
+                group by 1, 2 {groupby_cod_dimensao}
                 order by 1
             """
         case "Esgoto sanitário":
@@ -66,6 +82,7 @@ def get_df(
                 select
                     NU_ANO_CENSO as 'Ano',
                     {dimensao_geografica} as '{label_dimensao_geografica}',
+                    {string_cod_dimensao_geo},
                     round(cast(count(*) filter (where IN_ESGOTO_REDE_PUBLICA) as float) / count(*), 3) as 'Rede Pública',
                     round(cast(count(*) filter (where IN_ESGOTO_FOSSA_SEPTICA) as float) / count(*), 3) as 'Fossa Séptica',
                     round(cast(count(*) filter (where IN_ESGOTO_FOSSA_COMUM) as float) / count(*), 3) as 'Fossa rudimentar/comum',
@@ -78,8 +95,8 @@ def get_df(
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                {string_filtro_dimensao}
-                group by NU_ANO_CENSO, {dimensao_geografica}
+                where {string_filtro_dependencia} and {string_filtro_localidade}
+                group by 1, 2 {groupby_cod_dimensao}
                 order by 1
             """
         case "Destinação do lixo":
@@ -87,6 +104,7 @@ def get_df(
                 select
                     NU_ANO_CENSO as 'Ano',
                     {dimensao_geografica} as '{label_dimensao_geografica}',
+                    {string_cod_dimensao_geo},
                     round(cast(count(*) filter (where IN_LIXO_SERVICO_COLETA) as float) / count(*), 3) as 'Servico de coleta',
                     round(cast(count(*) filter (where IN_LIXO_QUEIMA) as float) / count(*), 3) as 'Queima',
                     round(cast(count(*) filter (where IN_LIXO_ENTERRA) as float) / count(*), 3) as 'Enterra',
@@ -107,8 +125,8 @@ def get_df(
                         / count(*)
                     , 3) as 'Sem informações'
                 from microdados
-                {string_filtro_dimensao}
-                group by NU_ANO_CENSO, {dimensao_geografica}
+                where {string_filtro_dependencia} and {string_filtro_localidade}
+                group by 1, 2 {groupby_cod_dimensao}
                 order by 1
             """
         case "Acesso a internet":
@@ -116,20 +134,22 @@ def get_df(
                 select
                     NU_ANO_CENSO as 'Ano',
                     {dimensao_geografica} as '{label_dimensao_geografica}',
+                    {string_cod_dimensao_geo},
                     round(cast(count(*) filter (where IN_INTERNET) as float) / count(*), 3) as 'Acesso a internet',
                 from microdados
-                {string_filtro_dimensao}
-                group by NU_ANO_CENSO, {dimensao_geografica}
+                where {string_filtro_dependencia} and {string_filtro_localidade}
+                group by 1, 2 {groupby_cod_dimensao}
                 order by 1
             """
     df = run_query(query)
     df = df.melt(
-        id_vars=df.columns[:2],
+        id_vars=df.columns[:3],
         var_name="Serviço",
         value_name="Taxa de acesso",
-        value_vars=df.columns[2:]
+        value_vars=df.columns[3:]
     )
     df["Nível de acesso em %"] = df["Taxa de acesso"] * 100
+    df = df.drop(columns=["Taxa de acesso"])
     return df
 
 
@@ -173,11 +193,13 @@ def plot_mapa(df: pd.DataFrame, dimensao: str, title: str) -> None:
         df,
         geojson=geojson,
         color="Nível de acesso em %",
-        locations=dimensao,
-        mapbox_style="white-bg",
-        featureidkey=f"properties.{geo_dict[dimensao][1]}",
-        center={"lat": -14, "lon": -55},
+        locations=df.columns[2],
+        featureidkey="properties.GEOCODIGO",
+        hover_name=df.columns[1],
+        hover_data=df.columns,
         animation_frame="Ano",
+        center={"lat": -14, "lon": -55},
+        mapbox_style="white-bg",
         color_continuous_scale="Viridis",
         zoom=3,
         width=750,
@@ -198,7 +220,12 @@ def download(df: pd.DataFrame, title: str) -> None:
     )
 
 
-def linha(filtro_dimensao: str, label_dimensao: str, label_dimensao_geografica: str, servico: str) -> None:
+def linha(
+        label_dimensao_geografica: str,
+        filtro_localidade: str,
+        filtro_dependencia: str,
+        servico: str
+) -> None:
     filtro_dimensao_geografica = st.sidebar.selectbox(
         label_dimensao_geografica,
         get_valores_possiveis("microdados", DIMENSOES_GEOGRAFICAS[label_dimensao_geografica])
@@ -207,31 +234,37 @@ def linha(filtro_dimensao: str, label_dimensao: str, label_dimensao_geografica: 
         servico,
         DIMENSOES_GEOGRAFICAS[label_dimensao_geografica],
         label_dimensao_geografica,
-        DIMENSOES[label_dimensao],
-        label_dimensao,
-        filtro_dimensao
+        filtro_localidade,
+        filtro_dependencia
     )
     df = get_df_filtrado(df, label_dimensao_geografica, filtro_dimensao_geografica)
-    title = f"{servico} | {label_dimensao_geografica} - {filtro_dimensao_geografica} | {label_dimensao} - {filtro_dimensao}"
+    title = f"{servico} | {label_dimensao_geografica} - {filtro_dimensao_geografica} | " \
+            f"Dependência Administrativa - {filtro_dependencia} | Localidade - {filtro_localidade}"
     plot_linha(df, title)
     download(df, title)
 
 
-def mapa(filtro_dimensao: str, label_dimensao: str, label_dimensao_geografica: str, servico: str) -> None:
+def mapa(
+        label_dimensao_geografica: str,
+        filtro_localidade: str,
+        filtro_dependencia: str,
+        servico: str
+) -> None:
     df = get_df(
         servico,
         DIMENSOES_GEOGRAFICAS[label_dimensao_geografica],
         label_dimensao_geografica,
-        DIMENSOES[label_dimensao],
-        label_dimensao,
-        filtro_dimensao
+        filtro_localidade,
+        filtro_dependencia
     )
     filtro_servico = st.sidebar.selectbox(
         servico,
         df["Serviço"].unique().tolist()
     )
     df = get_df_filtrado(df, "Serviço", filtro_servico)
-    title = title = f"{servico} - {filtro_servico}| {label_dimensao} - {filtro_dimensao}"
+    df = df.drop(columns=["Serviço"])
+    title = title = f"{servico} - {filtro_servico}| " \
+                    f"Dependência Administrativa - {filtro_dependencia} | Localidade - {filtro_localidade}"
     if st.button("Executar"):
         plot_mapa(df, label_dimensao_geografica, title)
         download(df, title)
@@ -274,24 +307,31 @@ def main() -> None:
             ]
         )
 
-    label_dimensao = st.sidebar.selectbox(
-        "Dimensão",
-        [
-            "Dependência Administrativa",
-            "Categoria de escola",
-            "Localidade",
-        ]
+    filtro_dependencia = st.sidebar.selectbox(
+        "Dependência Administrativa",
+        ["Total"] + get_valores_possiveis("microdados", DIMENSOES["Dependência Administrativa"])
     )
-    filtro_dimensao = st.sidebar.selectbox(
-        label_dimensao,
-        ["Total"] + get_valores_possiveis("microdados", DIMENSOES[label_dimensao])
+
+    filtro_localidade = st.sidebar.selectbox(
+        "Localidade",
+        ["Total"] + get_valores_possiveis("microdados", DIMENSOES["Localidade"])
     )
 
     match tipo_grafico:
         case "Linha":
-            linha(filtro_dimensao, label_dimensao, label_dimensao_geografica, servico)
+            linha(
+                label_dimensao_geografica,
+                filtro_localidade,
+                filtro_dependencia,
+                servico
+            )
         case "Mapa":
-            mapa(filtro_dimensao, label_dimensao, label_dimensao_geografica, servico)
+            mapa(
+                label_dimensao_geografica,
+                filtro_localidade,
+                filtro_dependencia,
+                servico
+            )
 
 
 if __name__ == "__main__":

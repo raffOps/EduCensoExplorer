@@ -12,6 +12,7 @@ logger = logging.getLogger(name="microdados - transform")
 
 warnings.filterwarnings("ignore")
 
+
 def load_dataframe(year: int) -> pd.DataFrame:
     return pd.read_csv(
         f"./data/raw/microdados/{year}.csv",
@@ -75,20 +76,19 @@ def transform_categorical_columns(df: pd.DataFrame) -> pd.DataFrame:
         df[column] = df[column]. \
             replace(to_replace=map_categorical_columns[column])
     df[categorical_columns] = df[categorical_columns].replace(["-1", "9"], None)
-    #df["TP_CATEGORIA_ESCOLA_PRIVADA"] = df["TP_CATEGORIA_ESCOLA_PRIVADA"]. \
-    #    replace(to_replace=["0", None], value="Pública")
     return df
 
 
 def transform_identifier_columns(df: pd.DataFrame) -> pd.DataFrame:
     identifier_columns = ["NU_DDD", "NU_TELEFONE", "NU_CNPJ_ESCOLA_PRIVADA",
                           "NU_CNPJ_MANTENEDORA", "CO_ESCOLA_SEDE_VINCULADA", "CO_IES_OFERTANTE",
-                          "CO_DISTRITO", "CO_CEP",
-                          "CO_REGIAO", "CO_UF", "CO_MESORREGIAO", "CO_MICRORREGIAO"]
+                          "CO_DISTRITO", "CO_CEP"]
     df[identifier_columns] = df[identifier_columns].astype("str")
 
-    identifier_columns_int = ["CO_MUNICIPIO", "CO_ENTIDADE"]
-    df[identifier_columns_int] = df[identifier_columns_int].astype("int64")
+    identifier_columns_int = ["CO_REGIAO", "CO_UF", "CO_MESORREGIAO", "CO_MICRORREGIAO", "CO_MUNICIPIO"]
+    df[identifier_columns_int] = df[identifier_columns_int].astype("int32")
+
+    df["CO_ENTIDADE"] = df["CO_ENTIDADE"].astype("int64")
     return df
 
 
