@@ -54,7 +54,7 @@ def get_df_linha(
                 select
                     NU_ANO_CENSO as 'Ano',
                     TP_GRUPO as 'Grupo',
-                    METRICA AS '{indicador}'
+                    METRICA AS '{"Quantidade" if "Média" in indicador else  "índice em %"}'
                 from {INDICADORES[indicador]} i
                 where
                     NO_LOCALIDADE_GEOGRAFICA='{localidade_geografica}'
@@ -75,7 +75,7 @@ def get_df_mapa(
                 select
                     NU_ANO_CENSO as 'Ano',
                     NO_LOCALIDADE_GEOGRAFICA as '{dimensao_geografica}',
-                    METRICA AS '{indicador} | {grupo}'
+                    METRICA AS '{"Quantidade" if "Média" in indicador else  "índice em %"}'
                 from {INDICADORES[indicador]} i
                 where
                     TP_GRUPO='{grupo}'
@@ -101,7 +101,7 @@ def plot_linha(
     fig = px.line(
         df,
         x="Ano",
-        y=indicador,
+        y=df.columns[2],
         color="Grupo",
         markers=True,
         title=title
@@ -193,7 +193,7 @@ def mapa(
         dimensao_geografica,
         grupo=grupo
     )
-    title = title = f"{indicador} | Grupo - {grupo} " \
+    title = title = f"{indicador} | {grupo} " \
                     f"| Localidade {Localidade} | Dependência {dependencia}"
     if st.button("Executar"):
         plot_mapa(df, indicador, title)

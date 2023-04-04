@@ -82,14 +82,13 @@ def get_renamed_and_news_columns(df: pd.DataFrame, indicador: str, base: str) ->
     # drop
     if base == "MUNICIPIOS":
         df = df.drop(df.columns[[1, 2, 3]], axis=1)
-    df.columns = map(str, range(df.columns.size))
 
     # renamed columns
     columns = ['NU_ANO_CENSO', 'NO_LOCALIDADE_GEOGRAFICA', 'NO_CATEGORIA', 'NO_DEPENDENCIA']
     df = df.rename(
         columns=dict(zip(df.columns[:4], columns))
     )
-    if len(MAP_INDICADORES[indicador]) == len(df.columns) - 4:
+    if len(MAP_INDICADORES[indicador]) != len(df.columns) - 4:
         raise Exception("Quantidade de grupos previamente mapeados não confere com a quantidade de grupos no df")
     df = df.rename(
         columns=dict(zip(df.columns[4:], MAP_INDICADORES[indicador]))
